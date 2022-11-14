@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltaDoctor));
             this.txt_cedula = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,7 +40,9 @@
             this.btn_aceptar = new System.Windows.Forms.Button();
             this.btn_registrar = new System.Windows.Forms.Button();
             this.dtg_ListaDoctores = new System.Windows.Forms.DataGridView();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_ListaDoctores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txt_cedula
@@ -135,11 +138,22 @@
             this.dtg_ListaDoctores.Size = new System.Drawing.Size(369, 170);
             this.dtg_ListaDoctores.TabIndex = 10;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(577, 248);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(195, 164);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
             // AltaDoctor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dtg_ListaDoctores);
             this.Controls.Add(this.btn_registrar);
             this.Controls.Add(this.btn_aceptar);
@@ -153,7 +167,9 @@
             this.Controls.Add(this.txt_cedula);
             this.Name = "AltaDoctor";
             this.Text = "AltaDoctor";
+            this.Shown += new System.EventHandler(this.ListaDoctores_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dtg_ListaDoctores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,5 +188,6 @@
         private System.Windows.Forms.Button btn_aceptar;
         private System.Windows.Forms.Button btn_registrar;
         private System.Windows.Forms.DataGridView dtg_ListaDoctores;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

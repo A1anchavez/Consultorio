@@ -23,5 +23,17 @@ namespace Consultorio
             var frmAltaDoctor = new AltaDoctor();
             frmAltaDoctor.ShowDialog();
         }
+
+        private void btn_altaCliente_Click(object sender, EventArgs e)
+        {
+            var frmAltaCliente = new AltaCliente();
+            frmAltaCliente.ShowDialog();
+        }
+
+        private void btn_altaConsulta_Click(object sender, EventArgs e)
+        {
+            var frmAltaConsulta = new AltaConsulta();
+            frmAltaConsulta.ShowDialog();
+        }
     }
 }

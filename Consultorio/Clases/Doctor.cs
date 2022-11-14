@@ -9,7 +9,7 @@ namespace Consultorio.Clases
 {
     public class Doctor
     {
-        private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctor.csv";
+        private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
         
         public string Cedula { get; set; }
         public string Nombre { get; set; }
@@ -51,7 +51,7 @@ namespace Consultorio.Clases
             if (String.IsNullOrEmpty(Cedula) || String.IsNullOrEmpty(Nombre) || String.IsNullOrEmpty(Apellidos) || String.IsNullOrEmpty(NumeroDeTelefono))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
-                    "La propiedadad Titulo o Descripcion estan vacias");
+                    "La propiedadad Cedula, Nombre o Numero de telefono estan vacias");
             }
 
 
