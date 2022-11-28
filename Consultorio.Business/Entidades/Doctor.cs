@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Consultorio.Clases
+namespace Consultorio.Business.Entidades
 {
     public class Doctor
     {
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
-        
+
         public string Cedula { get; set; }
         public string Nombre { get; set; }
         public string Apellidos { get; set; }
@@ -48,7 +48,7 @@ namespace Consultorio.Clases
         public void AgregarDoctor(Doctor doctor)
         {
 
-            if (String.IsNullOrEmpty(Cedula) || String.IsNullOrEmpty(Nombre) || String.IsNullOrEmpty(Apellidos) || String.IsNullOrEmpty(NumeroDeTelefono))
+            if (string.IsNullOrEmpty(Cedula) || string.IsNullOrEmpty(Nombre) || string.IsNullOrEmpty(Apellidos) || string.IsNullOrEmpty(NumeroDeTelefono))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Cedula, Nombre o Numero de telefono estan vacias");
@@ -66,7 +66,7 @@ namespace Consultorio.Clases
         {
             List<Doctor> listaDoctores = new();
 
-            if (System.IO.File.Exists(Path))
+            if (File.Exists(Path))
             {
                 /*Leer archivo*/
                 using (StreamReader strReader = new StreamReader(Path))

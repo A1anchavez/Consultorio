@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Consultorio.Clases
+namespace Consultorio.Business.Entidades
 {
     public class Consulta
     {
@@ -45,7 +45,7 @@ namespace Consultorio.Clases
                 nomDoctor = nomDoctor,
                 nomCliente = nomCliente,
                 fechaConsulta = fechaConsulta,
-                Motivo=Motivo
+                Motivo = Motivo
             };
 
             AgregarConsulta(consulta);
@@ -55,7 +55,7 @@ namespace Consultorio.Clases
         public void AgregarConsulta(Consulta consulta)
         {
 
-            if (String.IsNullOrEmpty(nomDoctor) || String.IsNullOrEmpty(nomCliente))
+            if (string.IsNullOrEmpty(nomDoctor) || string.IsNullOrEmpty(nomCliente))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
@@ -76,7 +76,7 @@ namespace Consultorio.Clases
         {
             List<Consulta> listaConsultas = new();
 
-            if (System.IO.File.Exists(Path))
+            if (File.Exists(Path))
             {
                 /*Leer archivo*/
                 using (StreamReader strReader = new StreamReader(Path))
@@ -120,7 +120,7 @@ namespace Consultorio.Clases
         {
             List<Doctor> listaDoctores = new();
 
-            if (System.IO.File.Exists(Path_Doctor))
+            if (File.Exists(Path_Doctor))
             {
                 /*Leer archivo*/
                 using (StreamReader strReader = new StreamReader(Path_Doctor))
@@ -150,7 +150,7 @@ namespace Consultorio.Clases
         {
             List<Cliente> listaClientes = new();
 
-            if (System.IO.File.Exists(Path_Cliente))
+            if (File.Exists(Path_Cliente))
             {
                 /*Leer archivo*/
                 using (StreamReader strReader = new StreamReader(Path_Cliente))

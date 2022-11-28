@@ -1,4 +1,4 @@
-﻿using Consultorio.Clases;
+﻿using Consultorio.Business.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

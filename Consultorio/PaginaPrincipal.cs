@@ -35,5 +35,27 @@ namespace Consultorio
             var frmAltaConsulta = new AltaConsulta();
             frmAltaConsulta.ShowDialog();
         }
+
+        private void btn_sqlRepository_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_sqlite_Click(object sender, EventArgs e)
+        {
+
+        }
+        
+        //Referencia a estos eventos tal vez den error a futuro, esperemos y no
+
+        private void btn_txtRepository_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_memoryRepository_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

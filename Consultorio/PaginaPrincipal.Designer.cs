@@ -39,6 +39,11 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btn_sqlRepository = new System.Windows.Forms.Button();
+            this.btn_sqlite = new System.Windows.Forms.Button();
+            this.btn_txtRepository = new System.Windows.Forms.Button();
+            this.btn_memoryRepository = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -144,11 +149,65 @@
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(551, 296);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(235, 15);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Selecciona en que tipo de dato se registrara";
+            // 
+            // btn_sqlRepository
+            // 
+            this.btn_sqlRepository.Location = new System.Drawing.Point(551, 328);
+            this.btn_sqlRepository.Name = "btn_sqlRepository";
+            this.btn_sqlRepository.Size = new System.Drawing.Size(94, 23);
+            this.btn_sqlRepository.TabIndex = 12;
+            this.btn_sqlRepository.Text = "SQLRepository";
+            this.btn_sqlRepository.UseVisualStyleBackColor = true;
+            this.btn_sqlRepository.Click += new System.EventHandler(this.btn_sqlRepository_Click);
+            // 
+            // btn_sqlite
+            // 
+            this.btn_sqlite.Location = new System.Drawing.Point(551, 357);
+            this.btn_sqlite.Name = "btn_sqlite";
+            this.btn_sqlite.Size = new System.Drawing.Size(108, 23);
+            this.btn_sqlite.TabIndex = 13;
+            this.btn_sqlite.Text = "SQLiteRepository";
+            this.btn_sqlite.UseVisualStyleBackColor = true;
+            this.btn_sqlite.Click += new System.EventHandler(this.btn_sqlite_Click);
+            // 
+            // btn_txtRepository
+            // 
+            this.btn_txtRepository.Location = new System.Drawing.Point(551, 386);
+            this.btn_txtRepository.Name = "btn_txtRepository";
+            this.btn_txtRepository.Size = new System.Drawing.Size(116, 23);
+            this.btn_txtRepository.TabIndex = 14;
+            this.btn_txtRepository.Text = "TextFileRepository";
+            this.btn_txtRepository.UseVisualStyleBackColor = true;
+            this.btn_txtRepository.Click += new System.EventHandler(this.btn_txtRepository_Click);
+            // 
+            // btn_memoryRepository
+            // 
+            this.btn_memoryRepository.Location = new System.Drawing.Point(551, 415);
+            this.btn_memoryRepository.Name = "btn_memoryRepository";
+            this.btn_memoryRepository.Size = new System.Drawing.Size(116, 23);
+            this.btn_memoryRepository.TabIndex = 15;
+            this.btn_memoryRepository.Text = "MemoryRepository";
+            this.btn_memoryRepository.UseVisualStyleBackColor = true;
+            this.btn_memoryRepository.Click += new System.EventHandler(this.btn_memoryRepository_Click);
+            // 
             // PaginaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_memoryRepository);
+            this.Controls.Add(this.btn_txtRepository);
+            this.Controls.Add(this.btn_sqlite);
+            this.Controls.Add(this.btn_sqlRepository);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pictureBox4);
@@ -182,5 +241,10 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn_sqlRepository;
+        private System.Windows.Forms.Button btn_sqlite;
+        private System.Windows.Forms.Button btn_txtRepository;
+        private System.Windows.Forms.Button btn_memoryRepository;
     }
 }
