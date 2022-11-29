@@ -10,12 +10,13 @@ namespace Infraestructura.SQLServer.Contextos
 {
     public class SQLServerContext : DbContext
     {
-        public DbSet<Cliente> cliente { get; set; }
-        public DbSet<Doctor> doctor { get; set; }
+        public DbSet<Cliente>Clientes { get; set; }
+        public DbSet<Doctor> Doctores { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        public SQLServerContext(DbContextOptions dbContextOptions): base(dbContextOptions)
         {
-            builder.UseSqlServer("Server = LAP-ALANC\\SQLEXPRESS; DataBase = Consultorio; Trusted_Connection = true");
+            
         }
+
     }
 }
