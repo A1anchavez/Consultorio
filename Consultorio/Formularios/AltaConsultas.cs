@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace Consultorio.Formularios
 {
-    public partial class AltaConsulta : Form
+    public partial class AltaConsultas : Form
     {
         public List<Consulta> ListaConsultas = new List<Consulta>();
         public List<Cliente> ListaClientes = new List<Cliente>();
         public List<Doctor> ListaDoctores = new List<Doctor>();
 
-        public AltaConsulta()
+        public AltaConsultas()
         {
             InitializeComponent();
         }
@@ -67,7 +67,7 @@ namespace Consultorio.Formularios
 
                 //Clientea
                 var cliente = new Cliente();
-                ListaClientes = cliente.CargarCliente();
+                ListaClientes = cliente.CargarClientes();
                 dts_ListaClientes.DataSource = ListaClientes;
 
                 //Doctores

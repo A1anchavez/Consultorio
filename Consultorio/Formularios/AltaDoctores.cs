@@ -11,34 +11,36 @@ using System.Windows.Forms;
 
 namespace Consultorio.Formularios
 {
-    public partial class AltaCliente : Form
+    public partial class AltaDoctores : Form
     {
-        public List<Cliente> ListaClientes = new List<Cliente>();
-        public AltaCliente()
+        public List<Doctor> ListaDoctores = new List<Doctor>();
+
+        public AltaDoctores()
         {
             InitializeComponent();
         }
-        #region Eventos Controles
 
+        #region Eventos controles
         private void btn_aceptar_Click(object sender, EventArgs e)
         {
             try
             {
-                var cliente = new Cliente(txt_nombre.Text,
-                            txt_apellidos.Text,
-                            dtp_fechaNacimiento.Value,
-                            txt_direccion.Text);
+                var doctor = new Doctor(
+                    txt_cedula.Text,
+                    txt_nombre.Text,
+                    txt_apellidos.Text,
+                    txt_numtel.Text);
 
-                //Agrega un elemento a la lista de tareas List<Cliente>
-                cliente.AgregarCliente();
+                //Agrega un elemento a la lista de doctores List<Doctor>
+                doctor.AgregarDoctor();
 
-                ListaClientes.Add(cliente);
+                ListaDoctores.Add(doctor);
 
                 LimpiarFormulario();
 
-                dtg_ListaClientes.DataSource = null;
-                dtg_ListaClientes.DataSource = ListaClientes;
-                dtg_ListaClientes.Refresh();
+                dtg_ListaDoctores.DataSource = null;
+                dtg_ListaDoctores.DataSource = ListaDoctores;
+                dtg_ListaDoctores.Refresh();
             }
             catch (ArgumentException ex)
             {
@@ -49,19 +51,16 @@ namespace Consultorio.Formularios
                 MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
             }
-
         }
 
-
-        private void ListaClientes_Shown(object sender, EventArgs e)
+        private void ListaDoctores_Shown(object sender, EventArgs e)
         {
             try
             {
-                //Context context = new();
 
-                var cliente = new Cliente();
-                ListaClientes = cliente.CargarCliente();
-                dtg_ListaClientes.DataSource = ListaClientes;
+                var doctor = new Doctor();
+                ListaDoctores = doctor.CargarDoctores();
+                dtg_ListaDoctores.DataSource = ListaDoctores;
             }
             catch (Exception)
             {
@@ -76,17 +75,15 @@ namespace Consultorio.Formularios
         {
             try
             {
-                Cliente cliente = new();
-                cliente.GuardarListaClientes(ListaClientes);
+                Doctor doctor = new();
+                doctor.GuardarListaDoctores(ListaDoctores);
             }
             catch (Exception)
             {
                 MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
             }
-
         }
-
         #endregion
 
         #region Metodos Privados
@@ -94,22 +91,23 @@ namespace Consultorio.Formularios
         {
             try
             {
+                txt_cedula.Text = string.Empty;
                 txt_nombre.Text = string.Empty;
                 txt_apellidos.Text = string.Empty;
-                dtp_fechaNacimiento.Value = DateTime.Today;
-                txt_direccion.Text = String.Empty;
+                txt_numtel.Text = string.Empty;
+
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Ha ocurrido un error.", "Informativo");
             }
             finally
             {
+                txt_cedula.Text = string.Empty;
                 txt_nombre.Text = string.Empty;
                 txt_apellidos.Text = string.Empty;
-                dtp_fechaNacimiento.Value = DateTime.Today;
-                txt_direccion.Text = String.Empty;
+                txt_numtel.Text = string.Empty;
             }
 
         }

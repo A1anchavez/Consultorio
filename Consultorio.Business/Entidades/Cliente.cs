@@ -57,7 +57,7 @@ namespace Consultorio.Business.Entidades
             }
             repository.Agregar(cliente);
         }
-        public List<Cliente> Cargar_Clientes()
+        public List<Cliente> CargarClientes()
         {
             return repository.Consultar();
         }
@@ -83,6 +83,18 @@ namespace Consultorio.Business.Entidades
         public void Agregar_Cliente(Cliente cliente)
         {
             this.repository.Agregar(cliente);
+        }
+        public void GuardarListaClientes(List<Cliente> ListaClientes)
+        {
+            foreach (Cliente cliente in ListaClientes)
+            {
+                using (StreamWriter strWriter = new StreamWriter(Path, true))
+                {
+                    strWriter.WriteLine(cliente.ToString());
+                    strWriter.Close();
+                }
+
+            }
         }
     }
 }

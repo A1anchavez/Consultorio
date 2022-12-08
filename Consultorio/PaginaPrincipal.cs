@@ -20,19 +20,19 @@ namespace Consultorio
 
         private void btn_altaDoctor_Click(object sender, EventArgs e)
         {
-            var frmAltaDoctor = new AltaDoctor();
+            var frmAltaDoctor = new AltaDoctores();
             frmAltaDoctor.ShowDialog();
         }
 
         private void btn_altaCliente_Click(object sender, EventArgs e)
         {
-            var frmAltaCliente = new AltaCliente();
+            var frmAltaCliente = new AltaClientes();
             frmAltaCliente.ShowDialog();
         }
 
         private void btn_altaConsulta_Click(object sender, EventArgs e)
         {
-            var frmAltaConsulta = new AltaConsulta();
+            var frmAltaConsulta = new AltaConsultas();
             frmAltaConsulta.ShowDialog();
         }
 

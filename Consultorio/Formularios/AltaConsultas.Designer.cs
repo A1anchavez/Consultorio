@@ -1,6 +1,6 @@
 ﻿namespace Consultorio.Formularios
 {
-    partial class AltaConsulta
+    partial class AltaConsultas
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltaConsulta));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltaConsultas));
             this.btn_aceptar = new System.Windows.Forms.Button();
             this.btn_registrar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
