@@ -12,7 +12,14 @@ namespace Consultorio.Business.Entidades
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaConsultas.csv";
         private readonly string Path_Doctor = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
         private readonly string Path_Cliente = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
-
+        
+        ////////////
+        public string Id { get; set; }
+        public string ClienteId { get; set; }
+        public Cliente Cliente { get; set; }
+        public string DoctorId { get; set; }
+        public Doctor Doctor { get; set; }
+        //////////
         public string nomDoctor { get; set; }
         public string nomCliente { get; set; }
         public DateTime fechaConsulta { get; set; }
@@ -135,7 +142,7 @@ namespace Consultorio.Business.Entidades
                         {
                             Cedula = campos[0],
                             Nombre = campos[1],
-                            Apellidos = campos[2],
+                            Apellido = campos[2],
                             NumeroDeTelefono = campos[3]
                         };
                         listaDoctores.Add(doctor);
@@ -164,7 +171,7 @@ namespace Consultorio.Business.Entidades
                         Cliente cliente = new()
                         {
                             Nombre = campos[0],
-                            Apellidos = campos[1],
+                            Apellido = campos[1],
                             FechaDeNacimiento = DateTime.Parse(campos[2]),
                             Direccion = campos[3]
                         };

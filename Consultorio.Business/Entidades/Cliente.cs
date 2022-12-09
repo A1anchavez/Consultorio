@@ -13,10 +13,13 @@ namespace Consultorio.Business.Entidades
     {
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
         public readonly IRepository<Cliente> repository;
-        public string Nombre { get; set; }
-        public string Apellidos { get; set; }
+        //public string Nombre { get; set; }
+        //public string Apellidos { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public string Direccion { get; set; }
+
+        //Propiedad de navegacion
+        public List<Consulta> Consultas { get; set; }
 
         public Cliente(IRepository<Cliente> repo)
         {
@@ -24,24 +27,24 @@ namespace Consultorio.Business.Entidades
         }
         public Cliente()
         {
-
+            Id ??= Guid.NewGuid().ToString();
         }
         public Cliente(IRepository<Cliente> repository, string nombre, string apellidos, DateTime fechaDeNacimiento, string? direccion)
         {
             Nombre = nombre;
-            Apellidos = apellidos;
+            Apellido = apellidos;
             this.repository = repository;
             FechaDeNacimiento = fechaDeNacimiento;
             Direccion = direccion;
         }
         public override string ToString()
         {
-            return $"{Id}, {Nombre}, {Apellidos},{FechaDeNacimiento},{Direccion}";
+            return $"{Id}, {Nombre}, {Apellido},{FechaDeNacimiento},{Direccion}";
         }
         public void AgregarCliente(Cliente cliente)
         {
             //Todo: Validar datos de entrada
-            if (String.IsNullOrEmpty(cliente.Nombre) || String.IsNullOrEmpty(cliente.Apellidos))
+            if (String.IsNullOrEmpty(cliente.Nombre) || String.IsNullOrEmpty(cliente.Apellido))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Nombre, Apellidos o Direccion estan vacias");
@@ -49,7 +52,7 @@ namespace Consultorio.Business.Entidades
             //Buscar si existe el cliente en la base de datos
             var result = repository.Consultar().Where(x =>
                             x.Nombre.ToUpper().Equals(cliente.Nombre.ToUpper()) &&
-                            x.Apellidos.ToUpper().Equals(cliente.Apellidos.ToUpper())
+                            x.Apellido.ToUpper().Equals(cliente.Apellido.ToUpper())
                          ).ToList();
             if (result.Count != 0)
             {
@@ -72,7 +75,7 @@ namespace Consultorio.Business.Entidades
             {
                 Id = Guid.NewGuid().ToString(),
                 Nombre = Nombre,
-                Apellidos = Apellidos,
+                Apellido = Apellido,
                 FechaDeNacimiento = FechaDeNacimiento,
                 Direccion = Direccion
             };

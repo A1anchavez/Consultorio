@@ -26,7 +26,7 @@ namespace Consultorio
 
         private void btn_altaCliente_Click(object sender, EventArgs e)
         {
-            var frmAltaCliente = new AltaClientes();
+            var frmAltaCliente = new AltaCliente();
             frmAltaCliente.ShowDialog();
         }
 

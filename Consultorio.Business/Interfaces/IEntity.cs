@@ -9,6 +9,6 @@ namespace Consultorio.Business.Interfaces
 {
     public interface IEntity
     {
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

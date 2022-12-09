@@ -1,4 +1,7 @@
 ﻿using Consultorio.Business.Entidades;
+using Consultorio.Business.Interfaces;
+using Infraestructura.Sqlite.Contextos;
+using Infraestructura.Sqlite.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +28,9 @@ namespace Consultorio.Formularios
         {
             try
             {
+                IRepository<Doctor> repo = new DoctorSQLiteRepository(new SQLiteContext());
                 var doctor = new Doctor(
+                    repo,
                     txt_cedula.Text,
                     txt_nombre.Text,
                     txt_apellidos.Text,

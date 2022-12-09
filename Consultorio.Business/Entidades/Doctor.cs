@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Consultorio.Business.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,30 +8,43 @@ using System.Threading.Tasks;
 
 namespace Consultorio.Business.Entidades
 {
-    public class Doctor
+    public class Doctor: Persona, IEntity
     {
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
+        public readonly IRepository<Doctor> repository;
 
         public string Cedula { get; set; }
-        public string Nombre { get; set; }
-        public string Apellidos { get; set; }
+
+        //ERROR ERROR ERROR
+
+        //public string Nombre { get; set; }
+        //public string Apellidos { get; set; }
+        
         public string NumeroDeTelefono { get; set; }
 
+        //Propiedad de navegacion
+        public List<Consulta> Consultas { get; set; }
+
+        public Doctor(IRepository<Doctor> repo)
+        {
+            repository = repo;
+        }
         public Doctor()
         {
-
+            Id ??= Guid.NewGuid().ToString();
         }
-        public Doctor(string cedula, string nombre, string apellidos, string numeroDeTelefono)
+        public Doctor(IRepository<Doctor> repository, string cedula, string nombre, string apellidos, string numeroDeTelefono)
         {
             Cedula = cedula;
             Nombre = nombre;
-            Apellidos = apellidos;
+            this.repository = repository;
+            Apellido = apellidos;
             NumeroDeTelefono = numeroDeTelefono;
         }
 
         public override string ToString()
         {
-            return $"{Cedula}, {Nombre}, {Apellidos},{NumeroDeTelefono}";
+            return $"{Id}, {Cedula}, {Nombre}, {Apellido},{NumeroDeTelefono}";
         }
         public void AgregarDoctor()
         {
@@ -39,7 +53,7 @@ namespace Consultorio.Business.Entidades
             {
                 Cedula = Cedula,
                 Nombre = Nombre,
-                Apellidos = Apellidos,
+                Apellido = Apellido,
                 NumeroDeTelefono = NumeroDeTelefono
             };
 
@@ -48,7 +62,7 @@ namespace Consultorio.Business.Entidades
         public void AgregarDoctor(Doctor doctor)
         {
 
-            if (string.IsNullOrEmpty(Cedula) || string.IsNullOrEmpty(Nombre) || string.IsNullOrEmpty(Apellidos) || string.IsNullOrEmpty(NumeroDeTelefono))
+            if (string.IsNullOrEmpty(Cedula) || string.IsNullOrEmpty(Nombre) || string.IsNullOrEmpty(Apellido) || string.IsNullOrEmpty(NumeroDeTelefono))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Cedula, Nombre o Numero de telefono estan vacias");
@@ -81,7 +95,7 @@ namespace Consultorio.Business.Entidades
                         {
                             Cedula = campos[0],
                             Nombre = campos[1],
-                            Apellidos = campos[2],
+                            Apellido = campos[2],
                             NumeroDeTelefono = campos[3]
                         };
                         listaDoctores.Add(doctor);

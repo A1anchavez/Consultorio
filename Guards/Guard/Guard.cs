@@ -57,5 +57,45 @@ namespace Transversal.Guards
             }
         }
         #endregion
+
+        #region tarea 
+
+        public static string LowerThan(this string value, int max, string property)
+        {
+            if (value.Length>=max)
+            {
+                throw new ArgumentException($"El nombre del cliente debe ser menor a {max} caracteres",property);
+            }
+            return value;
+        }
+        public static string EqualsNumber(this string value, int equal, string property)
+        {
+            if (value.Length!=equal)
+            {
+                throw new ArgumentException($"Debe contener {equal} caracteres ",property);
+            }
+            return value;
+        }
+
+
+        public static string HasWhiteSpace(this string value, string property)
+        {
+            if (value.Contains(" "))
+            {
+                throw new ArgumentException("No debe llevar espacios en blanco", property);
+            }
+            return value;
+        }
+
+        public static string IsNumber(this string value, string property)
+        {
+            int isNumber;
+            if (int.TryParse(value, out isNumber)==false)
+            {
+                throw new ArgumentException("Solo debe contener numeros",property);
+            }
+            return value;
+        }
+        #endregion
     }
 }

@@ -42,7 +42,7 @@ namespace Consultorio.Infraestructura.TextFile
 
                     Cliente clientes = new Cliente()
                     {
-                        Id = campos[0],
+                        //Id = campos[0],
                         Nombre = campos[1],
                         Apellido = campos[2],
                         FechaDeNacimiento = DateTime.Parse(campos[3]),
