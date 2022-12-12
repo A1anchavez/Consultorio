@@ -8,6 +8,7 @@ namespace Consultorio.Business.Interfaces
 {
     public interface IRepository<T> where T : class, IEntity, new()
     {
+        void GuardarCambios();
         void Guardar(List<T> entidades);
         void Agregar(T entity);
         List<T> Consultar();

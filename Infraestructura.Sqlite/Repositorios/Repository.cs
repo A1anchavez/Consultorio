@@ -34,5 +34,10 @@ namespace Consultorio.Infraestructura.SQLite.Repositorios
             _context.AddRange(entidades);
             _context.SaveChanges();
         }
+
+        public void GuardarCambios()
+        {
+            _context.SaveChanges();
+        }
     }
 }

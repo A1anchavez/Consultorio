@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Consultorio.Business.Entidades;
 using Infraestructura.SQLServer.Contextos;
-
+using Infraestructura.SQLServer.Repositorios;
+using Consultorio.Business.Interfaces;
 
 namespace Api_Consultorio.Controllers
 {
@@ -10,18 +11,25 @@ namespace Api_Consultorio.Controllers
     public class ConsultaController: ControllerBase
     {
         private readonly SQLServerContext _context;
-        public ConsultaController(SQLServerContext context)
+        private readonly IConsultaRepository _repo;
+
+        public ConsultaController(SQLServerContext context,IConsultaRepository repo)
         {
             _context = context;
+            _repo = repo;
         }
 
         //Agregar una consulta
         [HttpPost()]
         [Route("Agregar")]
-        public ActionResult CrearConsulta([FromBody] Consulta consulta)
+        public ActionResult CrearConsulta([FromBody] Consulta entry)
         {
-            _context.Consultas.Add(consulta);
-            _context.SaveChanges();
+        //    _context.Consultas.Add(entry);
+        //    _context.SaveChanges();
+
+            //var repo = new ConsultaSQLRepository(_context);
+
+            var consulta = new Consulta(_repo, entry.ClienteId, entry.DoctorId, entry.FechaConsulta, entry.Motivo);
 
             return Ok(consulta);
         }

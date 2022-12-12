@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Consultorio.Business.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Consultorio.Business.Entidades
 {
-    public class Consulta
+    public class Consulta: IEntity
     {
-        private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaConsultas.csv";
-        private readonly string Path_Doctor = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
-        private readonly string Path_Cliente = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
-        
+        //private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaConsultas.csv";
+        //private readonly string Path_Doctor = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
+        //private readonly string Path_Cliente = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
+
         ////////////
+        public readonly IRepository<Consulta> repository;
+
         public string Id { get; set; }
         public string ClienteId { get; set; }
         public Cliente Cliente { get; set; }
@@ -22,176 +26,208 @@ namespace Consultorio.Business.Entidades
         //////////
         
         
-        public string nomDoctor { get; set; }
-        public string nomCliente { get; set; }
-        public DateTime fechaConsulta { get; set; }
+        //public string nomDoctor { get; set; }
+        //public string nomCliente { get; set; }
+        public DateTime FechaConsulta { get; set; }//Formato Pascal
 
         public string Motivo { get; set; }
 
         public Consulta()
         {
             Id ??= Guid.NewGuid().ToString();
+
+           
+
+            
+
         }
 
-        public Consulta(string nom_doctor, string nom_cliente, DateTime fecha_consulta, string motivo)
+        public Consulta(IRepository<Consulta> repository, string DoctorId, string ClienteId, DateTime fecha_consulta, string motivo)
         {
-            nomDoctor = nom_doctor;
-            nomCliente = nom_cliente;
-            fechaConsulta = fecha_consulta;
+            this.repository = repository;
+            //nomDoctor = nom_doctor;
+            //nomCliente = nom_cliente;
+            FechaConsulta = fecha_consulta;
             Motivo = motivo;
         }
         public override string ToString()
         {
-            return $"{nomDoctor}, {nomCliente}, {fechaConsulta},{Motivo}";
+            return $"{Cliente.Id}, {Cliente.Nombre}, {FechaConsulta},{Motivo}";
         }
 
 
         public void AgregarConsulta()
         {
-            Consulta consulta = new Consulta()
-            {
-                nomDoctor = nomDoctor,
-                nomCliente = nomCliente,
-                fechaConsulta = fechaConsulta,
-                Motivo = Motivo
-            };
+            var consultas = repository.Consultar();/*.Where(x =>
+            x.ClienteId == this.ClienteId &&
+            x.FechaConsulta == this.FechaConsulta);*/ 
+            //Consulta consulta = new Consulta()
+            //{
+            //    nomDoctor = nomDoctor,
+            //    nomCliente = nomCliente,
+            //    fechaConsulta = fechaConsulta,
+            //    Motivo = Motivo
+            //};
 
-            AgregarConsulta(consulta);//uhhhhhh
-
+            AgregarConsulta(this, consultas);//preguntar: Preguntar a ivan
+            /*
+             * Cita con su cliente
+             * listado de citas previas
+             * buscar la fecha recibida en el listado de cita para saber si el cliente ya tiene una cita
+             * -si ya tiene una cita marca error
+             * -si no tiene una cita se agrega a la lista
+             */
         }
 
         public void AgregarConsulta(Consulta consulta /*Esto si no sirve quitar:*/, List<Consulta> ListaConsultas)
         {
 
-            if (string.IsNullOrEmpty(nomDoctor) || string.IsNullOrEmpty(nomCliente))
-            {
-                throw new ArgumentException("Las propiedades deben tener un valor. " +
-                    "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
-            }
+            //if (string.IsNullOrEmpty(Doctor.Nombre) || string.IsNullOrEmpty(nomCliente))
+            //{
+            //    throw new ArgumentException("Las propiedades deben tener un valor. " +
+            //        "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
+            //}
+
+            /**Todo: Validar que la Fecha no sea antigua*/
+
 
             //Metodo de validacion
-            //List<Consulta> ListaConsultas;
-            foreach (Consulta consultas in ListaConsultas)
-            {
-                if (consulta.nomCliente == consultas.nomCliente &&  consulta.fechaConsulta == consultas.fechaConsulta)
-                {
-                    throw new ArgumentException("El cliente seleccionado ya cuenta con una consulta asignada para ese dia");
-                }
-            }
 
+            var resultado = ListaConsultas.Where(x =>
+            x.ClienteId == consulta.ClienteId &&
+            x.FechaConsulta == consulta.FechaConsulta);
+
+            if(resultado.Any())
+                throw new ValidationException("El cliente seleccionado ya cuenta con una consulta asignada para ese dia");
+
+
+            //foreach (Consulta consultas in ListaConsultas)
+            //{
+            //    if (consulta.nomCliente == consultas.nomCliente &&  consulta.fechaConsulta == consultas.fechaConsulta)
+            //    {
+            //        throw new ValidationException("El cliente seleccionado ya cuenta con una consulta asignada para ese dia");
+            //    }
+            //}
+
+
+
+
+            ListaConsultas.Add(consulta);
+            repository.GuardarCambios();
 
             /** Persistir Elemento en un archivo **/
-            using (StreamWriter strWriter = new StreamWriter(Path, true))
-            {
-
-                strWriter.WriteLine(consulta.ToString());
-                strWriter.Close();
-            }
+            //using (StreamWriter strWriter = new StreamWriter(Path, true))
+            //{
+            //    strWriter.WriteLine(consulta.ToString());
+            //    strWriter.Close();
+            //}
         }
 
 
         public List<Consulta> CargarConsultas()
         {
-            List<Consulta> listaConsultas = new();
+            //List<Consulta> listaConsultas = new();
 
-            if (File.Exists(Path))
-            {
-                /*Leer archivo*/
-                using (StreamReader strReader = new StreamReader(Path))
-                {
-                    string ln = string.Empty;
+            //if (File.Exists(Path))
+            //{
+            //    /*Leer archivo*/
+            //    using (StreamReader strReader = new StreamReader(Path))
+            //    {
+            //        string ln = string.Empty;
 
-                    while ((ln = strReader.ReadLine()) != null)
-                    {
-                        string[] campos = ln.Split(",");
+            //        while ((ln = strReader.ReadLine()) != null)
+            //        {
+            //            string[] campos = ln.Split(",");
 
-                        Consulta consulta = new()
-                        {
-                            nomDoctor = campos[0],
-                            nomCliente = campos[1],
-                            fechaConsulta = DateTime.Parse(campos[2]),
-                            Motivo = campos[3]
-                        };
-                        listaConsultas.Add(consulta);
-                    }
-                }
-            }
-            return listaConsultas;
+            //            Consulta consulta = new()
+            //            {
+            //                nomDoctor = campos[0],
+            //                nomCliente = campos[1],
+            //                fechaConsulta = DateTime.Parse(campos[2]),
+            //                Motivo = campos[3]
+            //            };
+            //            listaConsultas.Add(consulta);
+            //        }
+            //    }
+            //}
+            return repository.Consultar();
         }
 
         public void GuardarListaConsultas(List<Consulta> ListaConsultas)
         {
-            foreach (Consulta consulta in ListaConsultas)
-            {
-                using (StreamWriter strWriter = new StreamWriter(Path, true))
-                {
-                    strWriter.WriteLine(consulta.ToString());
-                    strWriter.Close();
-                }
+            //foreach (Consulta consulta in ListaConsultas)
+            //{
+            //    using (StreamWriter strWriter = new StreamWriter(Path, true))
+            //    {
+            //        strWriter.WriteLine(consulta.ToString());
+            //        strWriter.Close();
+            //    }
 
-            }
+            //}
+
+            repository.Guardar(ListaConsultas);
         }
 
         #region cargar doctores y clientes
         //Cargar Doctores
-        public List<Doctor> CargarDoctores()
-        {
-            List<Doctor> listaDoctores = new();
+        //public List<Doctor> CargarDoctores()
+        //{
+        //    List<Doctor> listaDoctores = new();
 
-            if (File.Exists(Path_Doctor))
-            {
-                /*Leer archivo*/
-                using (StreamReader strReader = new StreamReader(Path_Doctor))
-                {
-                    string ln = string.Empty;
+        //    if (File.Exists(Path_Doctor))
+        //    {
+        //        /*Leer archivo*/
+        //        using (StreamReader strReader = new StreamReader(Path_Doctor))
+        //        {
+        //            string ln = string.Empty;
 
-                    while ((ln = strReader.ReadLine()) != null)
-                    {
-                        string[] campos = ln.Split(",");
+        //            while ((ln = strReader.ReadLine()) != null)
+        //            {
+        //                string[] campos = ln.Split(",");
 
-                        Doctor doctor = new()
-                        {
-                            Cedula = campos[0],
-                            Nombre = campos[1],
-                            Apellido = campos[2],
-                            NumeroDeTelefono = campos[3]
-                        };
-                        listaDoctores.Add(doctor);
-                    }
-                }
-            }
-            return listaDoctores;
-        }
+        //                Doctor doctor = new()
+        //                {
+        //                    Cedula = campos[0],
+        //                    Nombre = campos[1],
+        //                    Apellido = campos[2],
+        //                    NumeroDeTelefono = campos[3]
+        //                };
+        //                listaDoctores.Add(doctor);
+        //            }
+        //        }
+        //    }
+        //    return listaDoctores;
+        //}
 
-        //Cargar Clientes
-        public List<Cliente> CargarClientes()
-        {
-            List<Cliente> listaClientes = new();
+        ////Cargar Clientes
+        //public List<Cliente> CargarClientes()
+        //{
+        //    List<Cliente> listaClientes = new();
 
-            if (File.Exists(Path_Cliente))
-            {
-                /*Leer archivo*/
-                using (StreamReader strReader = new StreamReader(Path_Cliente))
-                {
-                    string ln = string.Empty;
+        //    if (File.Exists(Path_Cliente))
+        //    {
+        //        /*Leer archivo*/
+        //        using (StreamReader strReader = new StreamReader(Path_Cliente))
+        //        {
+        //            string ln = string.Empty;
 
-                    while ((ln = strReader.ReadLine()) != null)
-                    {
-                        string[] campos = ln.Split(",");
+        //            while ((ln = strReader.ReadLine()) != null)
+        //            {
+        //                string[] campos = ln.Split(",");
 
-                        Cliente cliente = new()
-                        {
-                            Nombre = campos[0],
-                            Apellido = campos[1],
-                            FechaDeNacimiento = DateTime.Parse(campos[2]),
-                            Direccion = campos[3]
-                        };
-                        listaClientes.Add(cliente);
-                    }
-                }
-            }
-            return listaClientes;
-        }
+        //                Cliente cliente = new()
+        //                {
+        //                    Nombre = campos[0],
+        //                    Apellido = campos[1],
+        //                    FechaDeNacimiento = DateTime.Parse(campos[2]),
+        //                    Direccion = campos[3]
+        //                };
+        //                listaClientes.Add(cliente);
+        //            }
+        //        }
+        //    }
+        //    return listaClientes;
+        //}
 
         #endregion
     }

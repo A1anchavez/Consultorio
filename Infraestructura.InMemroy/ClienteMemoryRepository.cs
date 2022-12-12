@@ -30,5 +30,9 @@ namespace Consultorio.Infraestructura.InMemory
         {
             Cliente = entidades;
         }
+
+        public void GuardarCambios()
+        {
+        }
     }
 }

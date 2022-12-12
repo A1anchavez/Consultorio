@@ -35,5 +35,10 @@ namespace Infraestructura.SQLServer.Repositorios
             _context.SaveChanges();
 
         }
+
+        public void GuardarCambios()
+        {
+            _context.SaveChanges();
+        }
     }
 }

@@ -72,5 +72,10 @@ namespace Infraestructura.TextFile
 
             }
         }
+
+        public void GuardarCambios()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

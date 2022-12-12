@@ -1,4 +1,8 @@
 ﻿using Consultorio.Business.Entidades;
+using Consultorio.Business.Interfaces;
+using Infraestructura.Sqlite.Contextos;
+using Infraestructura.Sqlite.Repositorios;
+using Infraestructura.SQLServer.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +31,8 @@ namespace Consultorio.Formularios
         {
             try
             {
-                var consulta = new Consulta(txt_NomDoc.Text,
+                var consulta = new Consulta(                            
+                            txt_NomDoc.Text,
                             txt_NomClnt.Text,
                             dtp_fechaConsulta.Value,
                             txt_MotCon.Text);

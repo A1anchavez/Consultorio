@@ -1,4 +1,5 @@
 ﻿using Consultorio.Business.Entidades;
+using Consultorio.Business.Interfaces;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -10,17 +11,20 @@ namespace Api_Consultorio.Controllers
     [Route("cliente")]
     public class ClienteController : ControllerBase
     {
-        private readonly SQLServerContext _context;
-        public ClienteController(SQLServerContext context)
+        private readonly IClienteRepository _repo;
+        private readonly ILogger<ClienteController> logger;
+
+        public ClienteController(IClienteRepository repo, ILogger<ClienteController> logger )
         {
-            _context = context;
+            _repo = repo;
+            this.logger = logger;
         }
 
         [HttpPost()]
         public ActionResult CrearCliente([FromBody] Cliente cliente)
         {
-            _context.Clientes.Add(cliente);
-            _context.SaveChanges();
+            _repo.Agregar(cliente);
+            _repo.GuardarCambios();
 
             return Ok(cliente);
         }
@@ -29,13 +33,13 @@ namespace Api_Consultorio.Controllers
         [Route("Consultar")]
         public ActionResult consultarCliente()
         {
-            var cliente = _context.Clientes.ToList();
+            var cliente = _repo.Consultar();
             return Ok(cliente);
         }
         [HttpGet("{Id}")]
         public ActionResult ConsultarCliente([FromRoute] string id)
         {
-            Cliente cliente = _context.Clientes.Where(x => x.Id == id).FirstOrDefault();
+            Cliente cliente = _repo.Consultar().Where(x => x.Id == id).FirstOrDefault();//Todo: Refactorizar
             try
             {
                 //return cliente;
@@ -48,8 +52,10 @@ namespace Api_Consultorio.Controllers
 
                 return Ok(cliente);
             }
-            catch
+            catch (Exception ex)
             {
+                logger.LogError(ex.Message);
+
                 return StatusCode(500,
                     new
                     {
@@ -66,7 +72,7 @@ namespace Api_Consultorio.Controllers
         [Route("Actualizar")]
         public ActionResult ActualizarCliente([FromBody] string id)
         {
-            Cliente cliente = _context.Clientes.Where(x => x.Id == id).FirstOrDefault();
+            Cliente cliente = _repo.ConsultarPorId(id);
             try
             {
                 //return consulta;
@@ -87,7 +93,7 @@ namespace Api_Consultorio.Controllers
                         Data = cliente
                     });
             }
-            _context.Update(cliente);
+            
             return Ok(cliente);
         }
 
@@ -96,7 +102,7 @@ namespace Api_Consultorio.Controllers
         [Route("Eliminar")]
         public ActionResult EliminarCliente([FromBody] string id)
         {
-            Cliente cliente = _context.Clientes.Where(x => x.Id == id).FirstOrDefault();
+            Cliente cliente = _repo.ConsultarPorId(id);
             try
             {
                 //return consulta;
@@ -115,7 +121,13 @@ namespace Api_Consultorio.Controllers
                         Data = cliente
                     });
             }
-            _context.Remove(cliente);
+            //Todo: Crear metodo Eliminar
+            /*
+             * Crear el metodo en el IRepository
+             * Crear la funcionalida en Repository
+             * Guardar Cambios
+             * */
+            //_context.Remove(cliente);
             return Ok(cliente);
         }
     }
