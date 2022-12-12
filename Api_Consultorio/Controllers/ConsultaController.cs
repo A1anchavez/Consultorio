@@ -1,52 +1,52 @@
-﻿using Consultorio.Business.Entidades;
+﻿using Microsoft.AspNetCore.Mvc;
+using Consultorio.Business.Entidades;
 using Infraestructura.SQLServer.Contextos;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 
 namespace Api_Consultorio.Controllers
 {
     [ApiController]
-    [Route("cliente")]
-    public class ClienteController : ControllerBase
+    [Route("consulta")]
+    public class ConsultaController: ControllerBase
     {
         private readonly SQLServerContext _context;
-        public ClienteController(SQLServerContext context)
+        public ConsultaController(SQLServerContext context)
         {
             _context = context;
         }
 
+        //Agregar una consulta
         [HttpPost()]
-        public ActionResult CrearCliente([FromBody] Cliente cliente)
+        [Route("Agregar")]
+        public ActionResult CrearConsulta([FromBody] Consulta consulta)
         {
-            _context.Clientes.Add(cliente);
+            _context.Consultas.Add(consulta);
             _context.SaveChanges();
 
-            return Ok(cliente);
+            return Ok(consulta);
         }
 
+        //Hacer una consulta a las consultas jaja
         [HttpGet]
         [Route("Consultar")]
-        public ActionResult consultarCliente()
+        public ActionResult consultarConsulta()
         {
-            var cliente = _context.Clientes.ToList();
-            return Ok(cliente);
+            var consulta = _context.Consultas.ToList();
+            return Ok(consulta);
         }
-        [HttpGet("{Id}")]
-        public ActionResult ConsultarCliente([FromRoute] string id)
+        [HttpGet("{Id}")]//Consultar mediante Id
+        public ActionResult ConsultarConsulta([FromRoute] string id)
         {
-            Cliente cliente = _context.Clientes.Where(x => x.Id == id).FirstOrDefault();
+            Consulta consulta = _context.Consultas.Where(x => x.Id == id).FirstOrDefault();
             try
             {
-                //return cliente;
-                if (cliente == null)
+                //return consulta;
+                if (consulta == null)
                 {
                     return NotFound("Cliente no encontrado");
                 }
 
-
-
-                return Ok(cliente);
+                return Ok(consulta);
             }
             catch
             {
@@ -55,27 +55,28 @@ namespace Api_Consultorio.Controllers
                     {
                         Error = "410025",
                         Mensaje = "Error: Cliente no fue procesado",
-                        Data = cliente
+                        Data = consulta
                     });
             }
 
         }
+
 
         //Actualizar una consulta
         [HttpPut("{Id}")]
         [Route("Actualizar")]
-        public ActionResult ActualizarCliente([FromBody] string id)
+        public ActionResult ActualizarConsulta([FromBody] string id)
         {
-            Cliente cliente = _context.Clientes.Where(x => x.Id == id).FirstOrDefault();
+            Consulta consulta = _context.Consultas.Where(x => x.Id == id).FirstOrDefault();
             try
             {
                 //return consulta;
-                if (cliente == null)
+                if (consulta == null)
                 {
                     return NotFound("Cliente no encontrado");
                 }
 
-                return Ok(cliente);
+                return Ok(consulta);
             }
             catch
             {
@@ -84,23 +85,23 @@ namespace Api_Consultorio.Controllers
                     {
                         Error = "410025",
                         Mensaje = "Error: Cliente no fue procesado",
-                        Data = cliente
+                        Data = consulta
                     });
             }
-            _context.Update(cliente);
-            return Ok(cliente);
+            _context.Update(consulta);
+            return Ok(consulta);
         }
 
         //Eliminar una consulta
         [HttpDelete("{Id}")]
         [Route("Eliminar")]
-        public ActionResult EliminarCliente([FromBody] string id)
+        public ActionResult EliminarConsulta([FromBody] string id)
         {
-            Cliente cliente = _context.Clientes.Where(x => x.Id == id).FirstOrDefault();
+            Consulta consulta = _context.Consultas.Where(x => x.Id == id).FirstOrDefault();
             try
             {
                 //return consulta;
-                if (cliente == null)
+                if (consulta == null)
                 {
                     return NotFound("Cliente no encontrado");
                 }
@@ -112,12 +113,11 @@ namespace Api_Consultorio.Controllers
                     {
                         Error = "410025",
                         Mensaje = "Error: Cliente no fue procesado",
-                        Data = cliente
+                        Data = consulta
                     });
             }
-            _context.Remove(cliente);
-            return Ok(cliente);
+            _context.Remove(consulta);
+            return Ok(consulta);
         }
     }
-
 }

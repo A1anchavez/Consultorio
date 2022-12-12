@@ -137,7 +137,7 @@
             // 
             this.dtp_fechaConsulta.Location = new System.Drawing.Point(12, 140);
             this.dtp_fechaConsulta.Name = "dtp_fechaConsulta";
-            this.dtp_fechaConsulta.Size = new System.Drawing.Size(200, 23);
+            this.dtp_fechaConsulta.Size = new System.Drawing.Size(224, 23);
             this.dtp_fechaConsulta.TabIndex = 9;
             // 
             // txt_NomClnt
@@ -200,7 +200,7 @@
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
             // 
-            // AltaConsulta
+            // AltaConsultas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -222,7 +222,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_registrar);
             this.Controls.Add(this.btn_aceptar);
-            this.Name = "AltaConsulta";
+            this.Name = "AltaConsultas";
             this.Text = "AltaCosulta";
             this.Shown += new System.EventHandler(this.ListaConsultas_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dts_ListaDoctores)).EndInit();

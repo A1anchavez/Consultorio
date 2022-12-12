@@ -20,6 +20,8 @@ namespace Consultorio.Business.Entidades
         public string DoctorId { get; set; }
         public Doctor Doctor { get; set; }
         //////////
+        
+        
         public string nomDoctor { get; set; }
         public string nomCliente { get; set; }
         public DateTime fechaConsulta { get; set; }
@@ -28,7 +30,7 @@ namespace Consultorio.Business.Entidades
 
         public Consulta()
         {
-
+            Id ??= Guid.NewGuid().ToString();
         }
 
         public Consulta(string nom_doctor, string nom_cliente, DateTime fecha_consulta, string motivo)
@@ -46,7 +48,6 @@ namespace Consultorio.Business.Entidades
 
         public void AgregarConsulta()
         {
-
             Consulta consulta = new Consulta()
             {
                 nomDoctor = nomDoctor,
@@ -55,17 +56,27 @@ namespace Consultorio.Business.Entidades
                 Motivo = Motivo
             };
 
-            AgregarConsulta(consulta);
+            AgregarConsulta(consulta);//uhhhhhh
 
         }
 
-        public void AgregarConsulta(Consulta consulta)
+        public void AgregarConsulta(Consulta consulta /*Esto si no sirve quitar:*/, List<Consulta> ListaConsultas)
         {
 
             if (string.IsNullOrEmpty(nomDoctor) || string.IsNullOrEmpty(nomCliente))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
+            }
+
+            //Metodo de validacion
+            //List<Consulta> ListaConsultas;
+            foreach (Consulta consultas in ListaConsultas)
+            {
+                if (consulta.nomCliente == consultas.nomCliente &&  consulta.fechaConsulta == consultas.fechaConsulta)
+                {
+                    throw new ArgumentException("El cliente seleccionado ya cuenta con una consulta asignada para ese dia");
+                }
             }
 
 
