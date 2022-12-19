@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Consultorio.Business.Interfaces
 {
-    public interface IClienteRepository:IRepository<Cliente>
+    public interface IClienteRepository : IRepository<Cliente>
     {
+
+        //IEnumerable<Cliente> ConsultarClientes(ClienteParameters clienteParameters);
     }
 }

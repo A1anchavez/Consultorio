@@ -1,4 +1,5 @@
-﻿using Consultorio.Business.Entidades;
+﻿using Api_Consultorio.Modelos;
+using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace Api_Consultorio.Controllers
         private readonly IClienteRepository _repo;
         private readonly ILogger<ClienteController> logger;
 
-        public ClienteController(IClienteRepository repo, ILogger<ClienteController> logger )
+        public ClienteController(IClienteRepository repo, ILogger<ClienteController> logger)
         {
             _repo = repo;
             this.logger = logger;
@@ -30,10 +31,9 @@ namespace Api_Consultorio.Controllers
         }
 
         [HttpGet]
-        [Route("Consultar")]
-        public ActionResult consultarCliente()
+        public ActionResult consultarCliente(/*[FromQuery] ClienteParameters clienteParameters*/)
         {
-            var cliente = _repo.Consultar();
+            var cliente = _repo.Consultar(/*clienteParameters*/);
             return Ok(cliente);
         }
         [HttpGet("{Id}")]
@@ -69,7 +69,6 @@ namespace Api_Consultorio.Controllers
 
         //Actualizar una consulta
         [HttpPut("{Id}")]
-        [Route("Actualizar")]
         public ActionResult ActualizarCliente([FromBody] string id)
         {
             Cliente cliente = _repo.ConsultarPorId(id);
@@ -93,13 +92,12 @@ namespace Api_Consultorio.Controllers
                         Data = cliente
                     });
             }
-            
+
             return Ok(cliente);
         }
 
         //Eliminar una consulta
         [HttpDelete("{Id}")]
-        [Route("Eliminar")]
         public ActionResult EliminarCliente([FromBody] string id)
         {
             Cliente cliente = _repo.ConsultarPorId(id);

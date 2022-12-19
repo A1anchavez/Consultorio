@@ -8,12 +8,12 @@ namespace Api_Consultorio.Controllers
 {
     [ApiController]
     [Route("consulta")]
-    public class ConsultaController: ControllerBase
+    public class ConsultaController : ControllerBase
     {
         private readonly SQLServerContext _context;
         private readonly IConsultaRepository _repo;
 
-        public ConsultaController(SQLServerContext context,IConsultaRepository repo)
+        public ConsultaController(SQLServerContext context, IConsultaRepository repo)
         {
             _context = context;
             _repo = repo;
@@ -21,11 +21,10 @@ namespace Api_Consultorio.Controllers
 
         //Agregar una consulta
         [HttpPost()]
-        [Route("Agregar")]
         public ActionResult CrearConsulta([FromBody] Consulta entry)
         {
-        //    _context.Consultas.Add(entry);
-        //    _context.SaveChanges();
+            //    _context.Consultas.Add(entry);
+            //    _context.SaveChanges();
 
             //var repo = new ConsultaSQLRepository(_context);
 
@@ -36,7 +35,6 @@ namespace Api_Consultorio.Controllers
 
         //Hacer una consulta a las consultas jaja
         [HttpGet]
-        [Route("Consultar")]
         public ActionResult consultarConsulta()
         {
             var consulta = _context.Consultas.ToList();
@@ -72,7 +70,6 @@ namespace Api_Consultorio.Controllers
 
         //Actualizar una consulta
         [HttpPut("{Id}")]
-        [Route("Actualizar")]
         public ActionResult ActualizarConsulta([FromBody] string id)
         {
             Consulta consulta = _context.Consultas.Where(x => x.Id == id).FirstOrDefault();
@@ -102,7 +99,6 @@ namespace Api_Consultorio.Controllers
 
         //Eliminar una consulta
         [HttpDelete("{Id}")]
-        [Route("Eliminar")]
         public ActionResult EliminarConsulta([FromBody] string id)
         {
             Consulta consulta = _context.Consultas.Where(x => x.Id == id).FirstOrDefault();

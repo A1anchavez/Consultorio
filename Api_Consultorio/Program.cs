@@ -9,6 +9,8 @@ var connection = builder.Configuration.GetConnectionString("SQLConnectionString"
 builder.Services.ConfigureSQLDbContext(connection);
 
 //Inyectar Dependencia
+
+//Esta linea da error
 builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;

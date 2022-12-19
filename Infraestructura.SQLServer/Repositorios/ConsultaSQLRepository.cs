@@ -1,5 +1,6 @@
 ﻿using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces;
+using Infraestructura.SQLServer.Contextos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Infraestructura.SQLServer.Repositorios
 {
     public class ConsultaSQLRepository : Repository<Consulta>, IConsultaRepository
     {
-        public ConsultaSQLRepository(DbContext context) : base(context)
+        public ConsultaSQLRepository(SQLServerContext context) : base(context)
         {
 
         }
