@@ -14,16 +14,12 @@ namespace Consultorio.Business.Entidades
         private string _apellido;
 
         public string Id { get; protected set; }
-        //public string Nombre { get; set; }
-        //public string Apellido { get; set; }
-
         public string Nombre
         {
             get => _nombre; set => _nombre = value
                 .HasValue(nameof(Nombre))
                 .GreaterThan(2, nameof(Nombre));
         }
-
         public string Apellido { get => _apellido; set => _apellido = value.HasValue(nameof(Apellido)).GreaterThan(5, nameof(Apellido)); }
 
         public Persona()

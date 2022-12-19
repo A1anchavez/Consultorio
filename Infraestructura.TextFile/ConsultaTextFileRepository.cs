@@ -2,8 +2,10 @@
 using Consultorio.Business.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,9 +45,11 @@ namespace Infraestructura.TextFile
                     Consulta consultas = new Consulta()
                     {
                         //Id = campos[0],
-                        nomDoctor = campos[1],
-                        nomCliente = campos[2],
-                        fechaConsulta = DateTime.Parse(campos[3]),
+
+                        //ToDo: Revisar luego estas lineas comentadas
+                        //Doctor = string.Format(campos[1]),
+                        //Cliente = string.Format(campos[2]),
+                        FechaConsulta = DateTime.Parse(campos[3]),
                         Motivo = campos[4]
                     };
                     consulta.Add(consultas);

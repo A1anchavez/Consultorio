@@ -31,7 +31,8 @@ namespace Consultorio.Formularios
         {
             try
             {
-                var consulta = new Consulta(                            
+                IRepository<Consulta> repo = new ConsultaSQLiteRepository(new SQLiteContext());
+                var consulta = new Consulta(repo,                            
                             txt_NomDoc.Text,
                             txt_NomClnt.Text,
                             dtp_fechaConsulta.Value,

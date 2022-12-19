@@ -11,6 +11,7 @@ builder.Services.ConfigureSQLDbContext(connection);
 //Inyectar Dependencia
 builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;
 
 //builder.Services.AddScoped<ILogger, Transversal.Loggers.Logger<ControllerBase>();
 

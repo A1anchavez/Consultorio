@@ -1,4 +1,5 @@
-﻿using Infraestructura.SQLServer.Contextos;
+﻿using Consultorio.Business.Interfaces;
+using Infraestructura.SQLServer.Contextos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api_Consultorio.Controllers
@@ -7,18 +8,13 @@ namespace Api_Consultorio.Controllers
     [Route("doctor")]
     public class DoctorController: ControllerBase
     {
-        private readonly SQLServerContext _context;
-        public DoctorController(SQLServerContext context)
-        {
-            _context = context;
-        }
+        private readonly IClienteRepository _repo;
+        private readonly ILogger<ClienteController> logger;
 
-        [HttpGet]
-        [Route("Consultar")]
-        public ActionResult consultarDoctor()
+        public DoctorController(IClienteRepository repo, ILogger<ClienteController> logger)
         {
-            var doctor = _context.Doctores.ToList();
-            return Ok(doctor);
+            _repo = repo;
+            this.logger = logger;
         }
     }
 }

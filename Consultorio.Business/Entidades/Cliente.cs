@@ -13,8 +13,6 @@ namespace Consultorio.Business.Entidades
     {
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
         public readonly IRepository<Cliente> repository;
-        //public string Nombre { get; set; }
-        //public string Apellidos { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public string Direccion { get; set; }
 
@@ -43,7 +41,6 @@ namespace Consultorio.Business.Entidades
         }
         public void AgregarCliente(Cliente cliente)
         {
-            //Todo: Validar datos de entrada
             if (String.IsNullOrEmpty(cliente.Nombre) || String.IsNullOrEmpty(cliente.Apellido))
             {
                 throw new ArgumentException("Las propiedades deben tener un valor. " +

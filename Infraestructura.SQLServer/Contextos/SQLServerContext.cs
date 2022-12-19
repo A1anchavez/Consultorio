@@ -40,7 +40,7 @@ namespace Infraestructura.SQLServer.Contextos
             builder.Entity<Consulta>().ToTable("RegConsultas", "At").HasKey(sc => sc.Id);
             builder.Entity<Consulta>().HasOne<Cliente>(sc => sc.Cliente).WithMany(s => s.Consultas).HasForeignKey(e=>e.ClienteId);
             builder.Entity<Consulta>().HasOne<Doctor>(sc => sc.Doctor).WithMany(s => s.Consultas).HasForeignKey(e => e.DoctorId);
-            builder.Entity<Consulta>().Property(p=>p.fechaConsulta).IsRequired().HasColumnName("fechaDeConsulta");
+            builder.Entity<Consulta>().Property(p=>p.FechaConsulta).IsRequired().HasColumnName("fechaDeConsulta");
             builder.Entity<Consulta>().Property(p => p.Motivo).HasMaxLength(150).HasColumnName("motivo");
 
 
