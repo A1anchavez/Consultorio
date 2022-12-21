@@ -12,6 +12,12 @@ namespace Infraestructura.InMemroy
     {
         /*** Persistencia en Memoria ***/
         private List<Consulta> Consulta = new List<Consulta>();
+
+        public void Actualizar(Consulta t)
+        {
+            throw new NotImplementedException();
+        }
+
         /********************************/
         public void Agregar(Consulta entity)
         {
@@ -26,6 +32,11 @@ namespace Infraestructura.InMemroy
         public Consulta ConsultarPorId(string Id)
         {
             return Consulta.Where(x => x.Id.Equals(Id)).FirstOrDefault();
+        }
+
+        public void Eliminar(string Id, Consulta t)
+        {
+            throw new NotImplementedException();
         }
 
         public void Guardar(List<Consulta> entidades)

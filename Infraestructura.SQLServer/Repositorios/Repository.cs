@@ -40,5 +40,18 @@ namespace Infraestructura.SQLServer.Repositorios
         {
             _context.SaveChanges();
         }
+
+        public void Actualizar(T t)
+        {
+            _context.Update(t);
+            _context.SaveChanges();
+        }
+        public void Eliminar(string Id, T t)
+        {
+            _context.Remove(t);
+            _context.SaveChanges();
+        }
+
+        public IQueryable<T> FindAll() => _context.Set<T>().AsNoTracking();
     }
 }

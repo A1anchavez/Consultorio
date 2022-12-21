@@ -62,17 +62,17 @@ namespace Transversal.Guards
 
         public static string LowerThan(this string value, int max, string property)
         {
-            if (value.Length>=max)
+            if (value.Length >= max)
             {
-                throw new ArgumentException($"El nombre del cliente debe ser menor a {max} caracteres",property);
+                throw new ArgumentException($"El nombre del cliente debe ser menor a {max} caracteres", property);
             }
             return value;
         }
         public static string EqualsNumber(this string value, int equal, string property)
         {
-            if (value.Length!=equal)
+            if (value.Length != equal)
             {
-                throw new ArgumentException($"Debe contener {equal} caracteres ",property);
+                throw new ArgumentException($"Debe contener {equal} caracteres ", property);
             }
             return value;
         }
@@ -90,9 +90,29 @@ namespace Transversal.Guards
         public static string IsNumber(this string value, string property)
         {
             int isNumber;
-            if (int.TryParse(value, out isNumber)==false)
+            if (int.TryParse(value, out isNumber) == false)
             {
-                throw new ArgumentException("Solo debe contener numeros",property);
+                throw new ArgumentException("Solo debe contener numeros", property);
+            }
+            return value;
+        }
+
+        public static string HasDash(this string value, string property)
+        {
+            if (value.Contains("-") || value.Contains("_"))
+            {
+                throw new ArgumentException("No debe llevar guion", property);
+            }
+            return value;
+        }
+        public static DateTime? HasProperAge(this DateTime? value, string property)
+        {
+            DateTime FechaMinima = new DateTime(1920, 01, 01, 8, 0, 0);
+
+
+            if (value>DateTime.Now || value<FechaMinima)
+            {
+                throw new ArgumentException("Fechas ingresadas no permitidas", property);
             }
             return value;
         }

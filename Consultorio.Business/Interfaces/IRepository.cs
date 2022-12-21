@@ -12,6 +12,11 @@ namespace Consultorio.Business.Interfaces
         void Guardar(List<T> entidades);
         void Agregar(T entity);
         List<T> Consultar();
+        IQueryable<T> FindAll();
         T ConsultarPorId(string Id);
+        void Actualizar(T t);
+        void Eliminar(string Id, T t);
+
+
     }
 }

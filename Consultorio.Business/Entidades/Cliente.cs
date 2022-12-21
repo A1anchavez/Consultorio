@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transversal.Guards;
 
 namespace Consultorio.Business.Entidades
 {
@@ -13,7 +14,12 @@ namespace Consultorio.Business.Entidades
     {
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
         public readonly IRepository<Cliente> repository;
-        public DateTime FechaDeNacimiento { get; set; }
+        private DateTime? _fechaDeNacimiento;
+
+        public DateTime? FechaDeNacimiento { 
+            get => _fechaDeNacimiento; 
+            set => _fechaDeNacimiento = value.HasProperAge(nameof(FechaDeNacimiento)); 
+        }
         public string Direccion { get; set; }
 
         //Propiedad de navegacion

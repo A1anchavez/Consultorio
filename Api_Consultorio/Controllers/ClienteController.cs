@@ -1,10 +1,12 @@
-﻿using Api_Consultorio.Modelos;
+﻿using Api_Consultorio.Dtos;
+using Api_Consultorio.Modelos;
 using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Api_Consultorio.Controllers
 {
@@ -22,20 +24,45 @@ namespace Api_Consultorio.Controllers
         }
 
         [HttpPost()]
-        public ActionResult CrearCliente([FromBody] Cliente cliente)
+        public ActionResult CrearCliente([FromBody] ClienteDto clienteDto)
         {
+            var cliente = new Cliente()
+            {
+                Id = clienteDto.Id,
+                Nombre = clienteDto.Nombre,
+                Apellido = clienteDto.Apellido,
+                FechaDeNacimiento = clienteDto.FechaDeNacimiento,
+                Direccion = clienteDto.Direccion
+            };
             _repo.Agregar(cliente);
             _repo.GuardarCambios();
 
             return Ok(cliente);
         }
 
+
+
         [HttpGet]
-        public ActionResult consultarCliente(/*[FromQuery] ClienteParameters clienteParameters*/)
+        public ActionResult consultarCliente([FromQuery] ClienteParameters clienteParameters)
         {
-            var cliente = _repo.Consultar(/*clienteParameters*/);
+            var cliente = _repo.Consultar(clienteParameters);
+
+            //var metadata = new
+            //{
+            //    cliente.TotalCount,
+            //    cliente.PageSize,
+            //    cliente.CurrentPage,
+            //    cliente.HasNext,
+            //    cliente.HasPrevious
+            //};
+
+            //Response.Headers.Add("X-Paginacion", JsonConvert.SerializeObject(metadata));
             return Ok(cliente);
         }
+
+
+
+
         [HttpGet("{Id}")]
         public ActionResult ConsultarCliente([FromRoute] string id)
         {
@@ -68,21 +95,27 @@ namespace Api_Consultorio.Controllers
         }
 
         //Actualizar una consulta
-        [HttpPut("{Id}")]
-        public ActionResult ActualizarCliente([FromBody] string id)
+        [HttpPut("{id}")]
+        public ActionResult ActualizarCliente(string id,[FromBody] ActualizarClienteDto cliente)
         {
-            Cliente cliente = _repo.ConsultarPorId(id);
+            var _cliente = _repo.ConsultarPorId(id);
             try
             {
                 //return consulta;
-                if (cliente == null)
+                if (_cliente == null)
                 {
                     return NotFound("Cliente no encontrado");
                 }
 
-                return Ok(cliente);
+                _cliente.Nombre = cliente.Nombre ?? _cliente.Nombre;
+                _cliente.Apellido = cliente.Apellido ?? _cliente.Apellido;
+                _cliente.FechaDeNacimiento = cliente.FechaDeNacimiento ?? _cliente.FechaDeNacimiento;
+                _cliente.Direccion = cliente.Direccion ?? _cliente.Direccion;
+
+                _repo.Actualizar(_cliente);
+                return Ok(_cliente);
             }
-            catch
+            catch(Exception ex)
             {
                 return StatusCode(500,
                     new
@@ -93,12 +126,12 @@ namespace Api_Consultorio.Controllers
                     });
             }
 
-            return Ok(cliente);
+            //return Ok(_cliente);
         }
 
         //Eliminar una consulta
         [HttpDelete("{Id}")]
-        public ActionResult EliminarCliente([FromBody] string id)
+        public ActionResult EliminarCliente([FromRoute] string id)
         {
             Cliente cliente = _repo.ConsultarPorId(id);
             try
@@ -108,6 +141,7 @@ namespace Api_Consultorio.Controllers
                 {
                     return NotFound("Cliente no encontrado");
                 }
+                _repo.Eliminar(id, cliente);
             }
             catch
             {
@@ -118,14 +152,7 @@ namespace Api_Consultorio.Controllers
                         Mensaje = "Error: Cliente no fue procesado",
                         Data = cliente
                     });
-            }
-            //Todo: Crear metodo Eliminar
-            /*
-             * Crear el metodo en el IRepository
-             * Crear la funcionalida en Repository
-             * Guardar Cambios
-             * */
-            //_context.Remove(cliente);
+            }            
             return Ok(cliente);
         }
     }

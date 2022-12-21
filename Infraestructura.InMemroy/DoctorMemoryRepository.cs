@@ -12,6 +12,12 @@ namespace Infraestructura.InMemroy
     {
         /*** Persistencia en Memoria ***/
         private List<Doctor> Doctor = new List<Doctor>();
+
+        public void Actualizar(Doctor t)
+        {
+            throw new NotImplementedException();
+        }
+
         /********************************/
         public void Agregar(Doctor entity)
         {
@@ -26,6 +32,11 @@ namespace Infraestructura.InMemroy
         public Doctor ConsultarPorId(string Id)
         {
             return Doctor.Where(x => x.Id.Equals(Id)).FirstOrDefault();
+        }
+
+        public void Eliminar(string Id, Doctor t)
+        {
+            throw new NotImplementedException();
         }
 
         public void Guardar(List<Doctor> entidades)

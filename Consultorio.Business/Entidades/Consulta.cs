@@ -25,9 +25,7 @@ namespace Consultorio.Business.Entidades
         public Doctor Doctor { get; set; }
         //////////
         
-        
-        //public string nomDoctor { get; set; }
-        //public string nomCliente { get; set; }
+      
         public DateTime FechaConsulta { get; set; }//Formato Pascal
 
         public string Motivo { get; set; }
@@ -82,11 +80,11 @@ namespace Consultorio.Business.Entidades
         public void AgregarConsulta(Consulta consulta /*Esto si no sirve quitar:*/, List<Consulta> ListaConsultas)
         {
 
-            //if (string.IsNullOrEmpty(Doctor.Nombre) || string.IsNullOrEmpty(nomCliente))
-            //{
-            //    throw new ArgumentException("Las propiedades deben tener un valor. " +
-            //        "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
-            //}
+            if (string.IsNullOrEmpty(Doctor.Nombre) || string.IsNullOrEmpty(Cliente.Nombre))
+            {
+                throw new ArgumentException("Las propiedades deben tener un valor. " +
+                    "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
+            }
 
             /**Todo: Validar que la Fecha no sea antigua*/
 

@@ -16,6 +16,12 @@ namespace Consultorio.Infraestructura.SQLite.Repositorios
         {
             _context = context;
         }
+
+        public void Actualizar(T t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Agregar(T entity)
         {
             _context.Set<T>().Add(entity);
@@ -29,6 +35,12 @@ namespace Consultorio.Infraestructura.SQLite.Repositorios
         {
             return _context.Set<T>().Where(x => x.Id == id).ToList().FirstOrDefault();
         }
+
+        public void Eliminar(string Id, T t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Guardar(List<T> entidades)
         {
             _context.AddRange(entidades);

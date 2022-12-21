@@ -1,10 +1,12 @@
 ﻿using Consultorio.Business.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transversal.Guards;
 
 namespace Consultorio.Business.Entidades
 {
@@ -12,15 +14,18 @@ namespace Consultorio.Business.Entidades
     {
         private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
         public readonly IRepository<Doctor> repository;
-
-        public string Cedula { get; set; }
-
-        //ERROR ERROR ERROR
-
-        //public string Nombre { get; set; }
-        //public string Apellidos { get; set; }
+        private string _cedula;
+        private string _numeroDeTelefono;
+        public string Cedula { 
+            get => _cedula; 
+            set => _cedula = value.IsNumber(nameof(Cedula)).LowerThan(17,nameof(Cedula)).HasWhiteSpace(nameof(Cedula)).HasDash(nameof(Cedula)); 
+        }
         
-        public string NumeroDeTelefono { get; set; }
+        public string NumeroDeTelefono { 
+            get => _numeroDeTelefono; 
+            set => _numeroDeTelefono = value.IsNumber(nameof(NumeroDeTelefono)).EqualsNumber(10,nameof(NumeroDeTelefono)).HasWhiteSpace(nameof(NumeroDeTelefono)); 
+        }
+
 
         //Propiedad de navegacion
         public List<Consulta> Consultas { get; set; }
@@ -33,6 +38,7 @@ namespace Consultorio.Business.Entidades
         {
             Id ??= Guid.NewGuid().ToString();
         }
+                                                                                //numerodetelefono cambio de string a int
         public Doctor(IRepository<Doctor> repository, string cedula, string nombre, string apellidos, string numeroDeTelefono)
         {
             Cedula = cedula;
@@ -67,6 +73,8 @@ namespace Consultorio.Business.Entidades
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Cedula, Nombre o Numero de telefono estan vacias");
             }
+            //ToDo: Validar si numero de telefono es numerico
+            //Validar si numero de telefono es numerico
 
 
             /** Persistir Elemento en un archivo **/
@@ -96,7 +104,7 @@ namespace Consultorio.Business.Entidades
                             Cedula = campos[0],
                             Nombre = campos[1],
                             Apellido = campos[2],
-                            NumeroDeTelefono = campos[3]
+                            NumeroDeTelefono = campos[3]//int.Parse(campos[3])
                         };
                         listaDoctores.Add(doctor);
                     }

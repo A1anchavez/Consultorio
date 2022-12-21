@@ -1,9 +1,13 @@
-﻿namespace Api_Consultorio.Modelos
+﻿using Consultorio.Business.Modelos;
+using System.Collections.Generic;
+using System;
+
+namespace Api_Consultorio.Modelos
 {
-    public class ClienteParameters
+    public class ClienteParameters//: QuerryStringParameters
     {
         const int maxPageSize = 50;
-        public int pageNumber { get; set; } = 1;
+        public int PageNumber { get; set; } = 1;
         private int _pageSize = 10;
         public int PageSize
         {

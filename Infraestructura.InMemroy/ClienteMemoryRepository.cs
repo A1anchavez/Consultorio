@@ -13,6 +13,12 @@ namespace Consultorio.Infraestructura.InMemory
     {
         /*** Persistencia en Memoria ***/
         private List<Cliente> Cliente = new List<Cliente>();
+
+        public void Actualizar(Cliente t)
+        {
+            throw new NotImplementedException();
+        }
+
         /********************************/
         public void Agregar(Cliente entity)
         {
@@ -26,6 +32,12 @@ namespace Consultorio.Infraestructura.InMemory
         {
             return Cliente.Where(x => x.Id.Equals(id)).FirstOrDefault();
         }
+
+        public void Eliminar(string Id, Cliente t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Guardar(List<Cliente> entidades)
         {
             Cliente = entidades;

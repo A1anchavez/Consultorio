@@ -13,6 +13,11 @@ namespace Infraestructura.TextFile
     {
         private const string path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaDoctores.csv";
 
+        public void Actualizar(Doctor t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Agregar(Doctor entity)
         {
             using (StreamWriter strWriter = new StreamWriter(path, true))
@@ -58,6 +63,11 @@ namespace Infraestructura.TextFile
         public Doctor ConsultarPorId(string Id)
         {
             return Consultar().Where(x => x.Id.Equals(Id)).FirstOrDefault();
+        }
+
+        public void Eliminar(string Id, Doctor t)
+        {
+            throw new NotImplementedException();
         }
 
         public void Guardar(List<Doctor> entidades)
