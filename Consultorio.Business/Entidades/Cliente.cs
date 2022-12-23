@@ -1,4 +1,4 @@
-﻿using Consultorio.Business.Interfaces;
+﻿using Consultorio.Business.Interfaces.Common;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -23,7 +23,7 @@ namespace Consultorio.Business.Entidades
         public string Direccion { get; set; }
 
         //Propiedad de navegacion
-        public List<Consulta> Consultas { get; set; }
+        public List<Consulta>? Consultas { get; set; }
 
         public Cliente(IRepository<Cliente> repo)
         {
@@ -33,13 +33,15 @@ namespace Consultorio.Business.Entidades
         {
             Id ??= Guid.NewGuid().ToString();
         }
-        public Cliente(IRepository<Cliente> repository, string nombre, string apellidos, DateTime fechaDeNacimiento, string? direccion)
+        public Cliente(IRepository<Cliente> repository, string nombre, string apellidos, DateTime fechaDeNacimiento, string? direccion):this()
         {
+            
             Nombre = nombre;
             Apellido = apellidos;
             this.repository = repository;
             FechaDeNacimiento = fechaDeNacimiento;
             Direccion = direccion;
+
         }
         public override string ToString()
         {

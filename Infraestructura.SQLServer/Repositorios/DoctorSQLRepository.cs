@@ -1,5 +1,5 @@
 ﻿using Consultorio.Business.Entidades;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Repositorios;
 using Infraestructura.SQLServer.Contextos;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,11 @@ namespace Infraestructura.SQLServer.Repositorios
         public DoctorSQLRepository(SQLServerContext context):base(context)
         {
 
+        }
+
+        public bool FechaDisponible(string clienteId, DateTime fecha)
+        {
+            throw new NotImplementedException();
         }
     }
 }

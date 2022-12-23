@@ -1,4 +1,6 @@
-﻿namespace Api_Consultorio.Dtos
+﻿using System;
+
+namespace Api_Consultorio.Dtos
 {
     public class ActualizarClienteDto
     {

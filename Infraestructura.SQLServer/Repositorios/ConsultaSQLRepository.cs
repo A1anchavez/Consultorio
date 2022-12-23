@@ -1,5 +1,5 @@
 ﻿using Consultorio.Business.Entidades;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Repositorios;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.EntityFrameworkCore;
 using System;

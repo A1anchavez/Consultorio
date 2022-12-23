@@ -1,5 +1,7 @@
 using Api_Consultorio.Extensiones;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Repositorios;
+using Consultorio.Business.Interfaces.Servicios;
+using Consultorio.Business.Servicios;
 using Infraestructura.SQLServer.Repositorios;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +12,18 @@ builder.Services.ConfigureSQLDbContext(connection);
 
 //Inyectar Dependencia
 
-//Esta linea da error
 builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;
+
+builder.Services.AddScoped<IClienteServices, ClienteServices>();
+builder.Services.AddScoped<IConsultaServices, ConsultaServices>();
+builder.Services.AddScoped<IDoctorServices, DoctorServices>();
+
+//builder.Services.AddScoped<IClienteServices, IClienteRepository>();
+//builder.Services.AddScoped<IConsultaServices, IConsultaRepository>();
+//builder.Services.AddScoped<IDoctorServices, IDoctorRepository>();
+
 
 //builder.Services.AddScoped<ILogger, Transversal.Loggers.Logger<ControllerBase>();
 

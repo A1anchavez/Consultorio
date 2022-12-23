@@ -1,5 +1,5 @@
 ﻿using Consultorio.Business.Entidades;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +35,11 @@ namespace Infraestructura.InMemroy
         }
 
         public void Eliminar(string Id, Consulta t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Consulta> FindAll()
         {
             throw new NotImplementedException();
         }

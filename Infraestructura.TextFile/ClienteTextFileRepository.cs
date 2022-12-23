@@ -1,5 +1,5 @@
 ﻿using Consultorio.Business.Entidades;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,6 +66,11 @@ namespace Consultorio.Infraestructura.TextFile
         }
 
         public void Eliminar(string Id, Cliente t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Cliente> FindAll()
         {
             throw new NotImplementedException();
         }

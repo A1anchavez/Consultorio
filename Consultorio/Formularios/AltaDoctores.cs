@@ -1,5 +1,5 @@
 ﻿using Consultorio.Business.Entidades;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Common;
 using Infraestructura.Sqlite.Contextos;
 using Infraestructura.Sqlite.Repositorios;
 using System;

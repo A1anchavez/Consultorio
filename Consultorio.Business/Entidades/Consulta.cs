@@ -1,4 +1,4 @@
-﻿using Consultorio.Business.Interfaces;
+﻿using Consultorio.Business.Interfaces.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Transversal.Guards;
 
 namespace Consultorio.Business.Entidades
 {
@@ -33,19 +34,14 @@ namespace Consultorio.Business.Entidades
         public Consulta()
         {
             Id ??= Guid.NewGuid().ToString();
-
-           
-
-            
-
         }
 
-        public Consulta(IRepository<Consulta> repository, string DoctorId, string ClienteId, DateTime fecha_consulta, string motivo)
+        public Consulta(IRepository<Consulta> repository, string doctorId, string clienteId, DateTime fecha_consulta, string motivo=""):this()
         {
             this.repository = repository;
-            //nomDoctor = nom_doctor;
-            //nomCliente = nom_cliente;
-            FechaConsulta = fecha_consulta;
+            ClienteId = clienteId;
+            DoctorId = doctorId;
+            FechaConsulta = fecha_consulta.HourBetween(8,19).LaborDays().AfterNow();
             Motivo = motivo;
         }
         public override string ToString()
@@ -98,14 +94,6 @@ namespace Consultorio.Business.Entidades
             if(resultado.Any())
                 throw new ValidationException("El cliente seleccionado ya cuenta con una consulta asignada para ese dia");
 
-
-            //foreach (Consulta consultas in ListaConsultas)
-            //{
-            //    if (consulta.nomCliente == consultas.nomCliente &&  consulta.fechaConsulta == consultas.fechaConsulta)
-            //    {
-            //        throw new ValidationException("El cliente seleccionado ya cuenta con una consulta asignada para ese dia");
-            //    }
-            //}
 
 
 

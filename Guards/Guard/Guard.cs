@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
-
+using System.Runtime.CompilerServices;
 
 namespace Transversal.Guards
 {
@@ -32,6 +32,63 @@ namespace Transversal.Guards
             return value;
         }
 
+        public static int Between(this int value, int min, int max, [CallerArgumentExpression("value")] string property = "")
+        {
+            if (value >= min && value <= max)
+                throw new ArgumentException("Valor no permitido", property);
+
+
+            return value;
+        }
+
+        public static DateTime HourBetween(this DateTime value, int min, int max, [CallerArgumentExpression("value")] string property = "")
+        {
+            if (value.Hour >= min && value.Hour <= max)
+                throw new ArgumentException("Valor no permitido", property);
+
+
+            return value;
+        }
+
+        public static DateTime? NotNull(this DateTime? value, [CallerArgumentExpression("value")] string property = "")
+        {
+            if (value is null)
+                throw new ArgumentException("La fecha debe contener un valor", property);
+
+            return value;
+        }
+
+        public static DateTime LaborDays(this DateTime value, bool includeSaturday = true, [CallerArgumentExpression("value")] string property = "")
+        {
+            if (value.DayOfWeek == DayOfWeek.Sunday || (value.DayOfWeek == DayOfWeek.Saturday && includeSaturday))
+                throw new ArgumentException("La fecha fuera de horario laboral", property);
+
+            return value;
+        }
+
+        public static DateTime AfterNow(this DateTime value, Period periodo = Period.Hour, [CallerArgumentExpression("value")] string property = "")
+        {
+            var newDate = periodo switch
+            {
+                Period.Hour => value.AddHours(1),
+                Period.Day => value.AddDays(1),
+                Period.Month => value.AddMonths(1),
+                Period.Year => value.AddYears(1),
+                _ => throw new ArgumentException("Opción fuera del indice", nameof(periodo))
+            };
+
+            if (newDate >= DateTime.Now)
+                throw new ArgumentException("Fecha fuera del intervalo", property);
+
+            return value;
+
+
+        }
+
+        public enum Period
+        {
+            Hour, Day, Month, Year
+        }
         #endregion
 
         #region Metodos Estaticos

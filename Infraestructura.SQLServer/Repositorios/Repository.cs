@@ -1,11 +1,11 @@
-﻿using Consultorio.Business.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
+using Consultorio.Business.Interfaces.Common;
 
 namespace Infraestructura.SQLServer.Repositorios
 {
@@ -53,5 +53,6 @@ namespace Infraestructura.SQLServer.Repositorios
         }
 
         public IQueryable<T> FindAll() => _context.Set<T>().AsNoTracking();
+
     }
 }

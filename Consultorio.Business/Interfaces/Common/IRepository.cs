@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Consultorio.Business.Interfaces
+namespace Consultorio.Business.Interfaces.Common
 {
     public interface IRepository<T> where T : class, IEntity, new()
     {
@@ -16,7 +16,5 @@ namespace Consultorio.Business.Interfaces
         T ConsultarPorId(string Id);
         void Actualizar(T t);
         void Eliminar(string Id, T t);
-
-
     }
 }

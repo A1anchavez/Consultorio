@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Consultorio.Business.Interfaces
+namespace Consultorio.Business.Interfaces.Common
 {
     public interface IEntity
     {

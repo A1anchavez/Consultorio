@@ -1,4 +1,4 @@
-﻿using Consultorio.Business.Interfaces;
+﻿using Consultorio.Business.Interfaces.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +37,11 @@ namespace Consultorio.Infraestructura.SQLite.Repositorios
         }
 
         public void Eliminar(string Id, T t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<T> FindAll()
         {
             throw new NotImplementedException();
         }

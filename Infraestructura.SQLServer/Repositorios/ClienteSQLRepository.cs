@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Api_Consultorio.Modelos;
 using Consultorio.Business.Entidades;
-using Consultorio.Business.Interfaces;
+using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Soportes;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +29,16 @@ namespace Infraestructura.SQLServer.Repositorios
                     .ToList();
         }
 
+        public Cliente ConsultarporNombre(string nombre)
+        {
+            return Consultar().FirstOrDefault(x => x.Nombre == nombre)!;
+        }
 
-
+        public bool FechaDisponible(string clienteId, DateTime fecha)
+        {
+            return !ConsultarPorId(clienteId).
+                Consultas.Any(x => x.FechaConsulta.Date == fecha.Date);
+        }
         //public IEnumerable<Cliente> Consultar(ClienteParameters clienteParameters)
         //{
         //    //IQueryable<Cliente> no sabemos si esta bien
