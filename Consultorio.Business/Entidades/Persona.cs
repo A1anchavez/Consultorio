@@ -14,7 +14,7 @@ namespace Consultorio.Business.Entidades
         private string _apellido;
 
         //El set estaba Protected, se lo quite para probar algo
-        public string Id { get; set; }
+        public string Id { get; protected set; }
         public string Nombre
         {
             get => _nombre; set => _nombre = value

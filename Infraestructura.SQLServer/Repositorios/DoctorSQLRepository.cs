@@ -16,9 +16,10 @@ namespace Infraestructura.SQLServer.Repositorios
 
         }
 
-        public bool FechaDisponible(string clienteId, DateTime fecha)
+        public bool FechaDisponible(string doctorId, DateTime fecha)
         {
-            throw new NotImplementedException();
+            return !ConsultarPorId(doctorId).
+                Consultas.Any(x => x.FechaConsulta.Date == fecha.Date);
         }
     }
 }

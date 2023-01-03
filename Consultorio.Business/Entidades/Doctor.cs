@@ -73,8 +73,6 @@ namespace Consultorio.Business.Entidades
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Cedula, Nombre o Numero de telefono estan vacias");
             }
-            //ToDo: Validar si numero de telefono es numerico
-            //Validar si numero de telefono es numerico
 
 
             /** Persistir Elemento en un archivo **/

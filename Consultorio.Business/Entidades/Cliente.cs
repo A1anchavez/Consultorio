@@ -12,7 +12,6 @@ namespace Consultorio.Business.Entidades
 {
     public class Cliente : Persona, IEntity
     {
-        private readonly string Path = "C:\\Users\\alan.chavez\\Desktop\\Entrenamiento Desarollo\\Residencias Consultorio\\ListaClientes.csv";
         public readonly IRepository<Cliente> repository;
         private DateTime? _fechaDeNacimiento;
 
@@ -91,18 +90,6 @@ namespace Consultorio.Business.Entidades
         public void Agregar_Cliente(Cliente cliente)
         {
             this.repository.Agregar(cliente);
-        }
-        public void GuardarListaClientes(List<Cliente> ListaClientes)
-        {
-            foreach (Cliente cliente in ListaClientes)
-            {
-                using (StreamWriter strWriter = new StreamWriter(Path, true))
-                {
-                    strWriter.WriteLine(cliente.ToString());
-                    strWriter.Close();
-                }
-
-            }
         }
     }
 }

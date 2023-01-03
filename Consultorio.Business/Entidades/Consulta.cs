@@ -63,14 +63,7 @@ namespace Consultorio.Business.Entidades
             //    Motivo = Motivo
             //};
 
-            AgregarConsulta(this, consultas);//preguntar: Preguntar a ivan
-            /*
-             * Cita con su cliente
-             * listado de citas previas
-             * buscar la fecha recibida en el listado de cita para saber si el cliente ya tiene una cita
-             * -si ya tiene una cita marca error
-             * -si no tiene una cita se agrega a la lista
-             */
+            AgregarConsulta(this, consultas);
         }
 
         public void AgregarConsulta(Consulta consulta /*Esto si no sirve quitar:*/, List<Consulta> ListaConsultas)
@@ -81,9 +74,6 @@ namespace Consultorio.Business.Entidades
                 throw new ArgumentException("Las propiedades deben tener un valor. " +
                     "La propiedadad Nombre de el Doctor o Nombre de el Cliente estan vacias");
             }
-
-            /**Todo: Validar que la Fecha no sea antigua*/
-
 
             //Metodo de validacion
 

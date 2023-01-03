@@ -6,12 +6,12 @@ namespace Consultorio.Business.Interfaces.Servicios
 {
     public interface IClienteServices
     {
-        Cliente AgregarCliente(string nombre, string apellido, string direccion, DateTime fecha);
-        Cliente ConsultarClientes();
-        Cliente ConsultarClientePorId();
+        Cliente AgregarCliente(Cliente cliente);
+        Cliente ConsultarClientes(ClienteParameters clienteParameters);
+        Cliente ConsultarClientePorId(string id);
         Cliente ActualizarCliente(string id, string nombre, string apellido, string direccion, DateTime? fecha);
         Cliente EliminarCliente();
-        Consulta AgregarConsulta(string clienteId, string doctorId, DateTime fechaConsulta, string motivo = "");
+        Consulta AgregarConsulta(Consulta consulta);
 
 
     }

@@ -20,10 +20,6 @@ builder.Services.AddScoped<IClienteServices, ClienteServices>();
 builder.Services.AddScoped<IConsultaServices, ConsultaServices>();
 builder.Services.AddScoped<IDoctorServices, DoctorServices>();
 
-//builder.Services.AddScoped<IClienteServices, IClienteRepository>();
-//builder.Services.AddScoped<IConsultaServices, IConsultaRepository>();
-//builder.Services.AddScoped<IDoctorServices, IDoctorRepository>();
-
 
 //builder.Services.AddScoped<ILogger, Transversal.Loggers.Logger<ControllerBase>();
 

@@ -24,7 +24,7 @@ namespace Api_Consultorio.Controllers
         public ActionResult CrearDoctor([FromBody] DoctorDto doctorDto)
         {
             var doctor = new Doctor() { 
-            Id = doctorDto.Id,
+            //Id = doctorDto.Id,
             Cedula = doctorDto.Cedula,
             Nombre = doctorDto.Nombre,
             Apellido = doctorDto.Apellido,

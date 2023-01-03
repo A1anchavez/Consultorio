@@ -1,4 +1,4 @@
-﻿using Api_Consultorio.Dtos;
+﻿
 using Api_Consultorio.Modelos;
 using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Repositorios;
@@ -43,52 +43,42 @@ namespace Consultorio.Business.Servicios
             return cliente;
         }
 
-        public Cliente AgregarCliente(string nombre, string apellido, string direccion, DateTime fecha)
+        public Cliente AgregarCliente(Cliente cliente)
         {
-            //! Validar si el cliente existe
-            if (!(_repo.ConsultarporNombre(nombre) is null))
-            {
-                throw new ValidationException("El cliente ya existe en la base de datos");
-            }
-
-            //Crear un nuevo Cliente
-            var cte = new Cliente()
-            {
-                Nombre=nombre,
-                Apellido=apellido,
-                Direccion=direccion,
-                FechaDeNacimiento=fecha
-            };
-            //Guardar Cambios
-            cte.AgregarCliente(cte);
-            _repo.GuardarCambios();
-            return cte;
+            var result = _repo.ConsultarPorExistencia(cliente.Nombre, cliente.Apellido, cliente.FechaDeNacimiento);
+                if (!(result is null))
+                {
+                    throw new ValidationException("El cliente ya existe en la base de datos "+result.Id);
+                }
+                _repo.Agregar(cliente);
+                _repo.GuardarCambios();
+                return cliente;
         }
 
-        public Consulta AgregarConsulta(string clienteId, string doctorId, DateTime fechaConsulta, string motivo = "")
+        public Consulta AgregarConsulta(Consulta consulta)
         {
             //Validar que el cliente exista
-            if (_repo.ConsultarPorId(clienteId) == null)
+            if (_repo.ConsultarPorId(consulta.ClienteId) == null)
             {
                 throw new ValidationException("El cliente no existe");
             }
             //Validar que el doctor exista
-            if (_doctorRepo.ConsultarPorId(doctorId) == null)
+            if (_doctorRepo.ConsultarPorId(consulta.DoctorId) == null)
             {
                 throw new ValidationException("El Doctor no existe");
             }
 
             //Validar que ni el doctor ni el paciente tengan citas en mismo horario
-            if (_doctorRepo.FechaDisponible(doctorId, fechaConsulta) &&
-                _repo.FechaDisponible(clienteId, fechaConsulta))
+            if (_doctorRepo.FechaDisponible(consulta.DoctorId, consulta.FechaConsulta) &&
+                _repo.FechaDisponible(consulta.ClienteId, consulta.FechaConsulta))
                 throw new ValidationException("Fecha no disponible");
 
-            var consulta = new Consulta(
-                clienteId,
-                doctorId,
-                fechaConsulta,
-                motivo
-            );
+            //var consulta = new Consulta(
+            //    clienteId,
+            //    doctorId,
+            //    fechaConsulta,
+            //    motivo
+            //);
 
 
             // cita.Update(doctorId,fechaConsulta);// = DateTime.Now.AddDays(-1);
@@ -106,6 +96,8 @@ namespace Consultorio.Business.Servicios
             return cliente;
 
         }
+
+        
 
         public Cliente ConsultarClientes(ClienteParameters clienteParameters)
         {

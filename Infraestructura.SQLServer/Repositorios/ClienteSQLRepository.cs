@@ -29,10 +29,20 @@ namespace Infraestructura.SQLServer.Repositorios
                     .ToList();
         }
 
-        public Cliente ConsultarporNombre(string nombre)
+        public Cliente ConsultarPorExistencia(string nombre, string apellido, DateTime? fecha)
         {
-            return Consultar().FirstOrDefault(x => x.Nombre == nombre)!;
+
+            var result = 
+                Consultar().FirstOrDefault((x) => 
+                {
+                    return x.Nombre == nombre && x.Apellido == apellido && x.FechaDeNacimiento.Value.Date == fecha.Value.Date;
+                }
+                );
+            return result;
         }
+
+        public Cliente ConsultarporNombre(string nombre) => Consultar().FirstOrDefault(x => x.Nombre == nombre)!;
+        
 
         public bool FechaDisponible(string clienteId, DateTime fecha)
         {

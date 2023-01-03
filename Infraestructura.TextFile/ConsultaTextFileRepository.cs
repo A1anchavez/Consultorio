@@ -52,6 +52,7 @@ namespace Infraestructura.TextFile
                         //Id = campos[0],
 
                         //ToDo: Revisar luego estas lineas comentadas
+                        //formato string 
                         //Doctor = string.Format(campos[1]),
                         //Cliente = string.Format(campos[2]),
                         FechaConsulta = DateTime.Parse(campos[3]),
