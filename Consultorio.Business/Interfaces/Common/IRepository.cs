@@ -15,6 +15,6 @@ namespace Consultorio.Business.Interfaces.Common
         IQueryable<T> FindAll();
         T ConsultarPorId(string Id);
         void Actualizar(T t);
-        void Eliminar(string Id, T t);
+        void Eliminar(T t);
     }
 }

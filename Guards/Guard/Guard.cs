@@ -146,11 +146,13 @@ namespace Transversal.Guards
 
         public static string IsNumber(this string value, string property)
         {
-            int isNumber;
-            if (int.TryParse(value, out isNumber) == false)
+            long isNumber;
+            bool isTrue = (long.TryParse(value, out isNumber));
+            if (isTrue == false)
             {
                 throw new ArgumentException("Solo debe contener numeros", property);
             }
+
             return value;
         }
 

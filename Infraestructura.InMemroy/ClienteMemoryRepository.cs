@@ -33,7 +33,7 @@ namespace Consultorio.Infraestructura.InMemory
             return Cliente.Where(x => x.Id.Equals(id)).FirstOrDefault();
         }
 
-        public void Eliminar(string Id, Cliente t)
+        public void Eliminar(Cliente t)
         {
             throw new NotImplementedException();
         }

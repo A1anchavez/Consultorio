@@ -36,7 +36,7 @@ namespace Consultorio.Infraestructura.SQLite.Repositorios
             return _context.Set<T>().Where(x => x.Id == id).ToList().FirstOrDefault();
         }
 
-        public void Eliminar(string Id, T t)
+        public void Eliminar(T t)
         {
             throw new NotImplementedException();
         }

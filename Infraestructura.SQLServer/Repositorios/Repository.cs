@@ -46,7 +46,7 @@ namespace Infraestructura.SQLServer.Repositorios
             _context.Update(t);
             _context.SaveChanges();
         }
-        public void Eliminar(string Id, T t)
+        public void Eliminar(T t)
         {
             _context.Remove(t);
             _context.SaveChanges();

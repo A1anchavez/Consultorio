@@ -26,68 +26,68 @@ namespace Consultorio.Formularios
         #region Eventos controles
         private void btn_aceptar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                IRepository<Doctor> repo = new DoctorSQLiteRepository(new SQLiteContext());
-                var doctor = new Doctor(
-                    repo,
-                    txt_cedula.Text,
-                    txt_nombre.Text,
-                    txt_apellidos.Text,
-                    txt_numtel.Text);
+            //try
+            //{
+            //    IRepository<Doctor> repo = new DoctorSQLiteRepository(new SQLiteContext());
+            //    var doctor = new Doctor(
+            //        repo,
+            //        txt_cedula.Text,
+            //        txt_nombre.Text,
+            //        txt_apellidos.Text,
+            //        txt_numtel.Text);
 
-                //Agrega un elemento a la lista de doctores List<Doctor>
-                doctor.AgregarDoctor();
+            //    //Agrega un elemento a la lista de doctores List<Doctor>
+            //    doctor.AgregarDoctor();
 
-                ListaDoctores.Add(doctor);
+            //    ListaDoctores.Add(doctor);
 
-                LimpiarFormulario();
+            //    LimpiarFormulario();
 
-                dtg_ListaDoctores.DataSource = null;
-                dtg_ListaDoctores.DataSource = ListaDoctores;
-                dtg_ListaDoctores.Refresh();
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //    dtg_ListaDoctores.DataSource = null;
+            //    dtg_ListaDoctores.DataSource = ListaDoctores;
+            //    dtg_ListaDoctores.Refresh();
+            //}
+            //catch (ArgumentException ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //}
         }
 
         private void ListaDoctores_Shown(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                var doctor = new Doctor();
-                ListaDoctores = doctor.CargarDoctores();
-                dtg_ListaDoctores.DataSource = ListaDoctores;
-            }
-            catch (Exception)
-            {
+            //    var doctor = new Doctor();
+            //    ListaDoctores = doctor.CargarDoctores();
+            //    dtg_ListaDoctores.DataSource = ListaDoctores;
+            //}
+            //catch (Exception)
+            //{
 
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //    MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //}
 
         }
 
         private void btn_registrar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Doctor doctor = new();
-                doctor.GuardarListaDoctores(ListaDoctores);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //try
+            //{
+            //    Doctor doctor = new();
+            //    doctor.GuardarListaDoctores(ListaDoctores);
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //}
         }
         #endregion
 

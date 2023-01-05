@@ -44,10 +44,10 @@ namespace Infraestructura.SQLServer.Repositorios
         public Cliente ConsultarporNombre(string nombre) => Consultar().FirstOrDefault(x => x.Nombre == nombre)!;
         
 
-        public bool FechaDisponible(string clienteId, DateTime fecha)
+        public bool FechaDisponible(string clienteId, DateTime? fecha)
         {
             return !ConsultarPorId(clienteId).
-                Consultas.Any(x => x.FechaConsulta.Date == fecha.Date);
+                Consultas.Any(x => x.FechaConsulta.Date == fecha);
         }
         //public IEnumerable<Cliente> Consultar(ClienteParameters clienteParameters)
         //{

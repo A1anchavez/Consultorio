@@ -1,8 +1,12 @@
 ﻿using Api_Consultorio.Dtos;
 using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Repositorios;
+using Consultorio.Business.Interfaces.Servicios;
+using Consultorio.Business.Modelos;
+using Consultorio.Business.Servicios;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api_Consultorio.Controllers
 {
@@ -10,65 +14,99 @@ namespace Api_Consultorio.Controllers
     [Route("doctor")]
     public class DoctorController : ControllerBase
     {
-        private readonly IDoctorRepository _repo;
-        private readonly ILogger<DoctorController> logger;
+        private readonly IDoctorServices _doctorServices;
+        private readonly ILogger<DoctorController> _logger;
 
-        public DoctorController(IDoctorRepository repo, ILogger<DoctorController> logger)
+        public DoctorController(IDoctorServices doctorServices, ILogger<DoctorController> logger)
         {
-            _repo = repo;
-            this.logger = logger;
+
+            _logger = logger;
+            _doctorServices = doctorServices;
         }
 
+        #region Doctor Post/Get/Put/Delete
         //Agregar un Doctor
         [HttpPost()]
         public ActionResult CrearDoctor([FromBody] DoctorDto doctorDto)
         {
-            var doctor = new Doctor() { 
-            //Id = doctorDto.Id,
-            Cedula = doctorDto.Cedula,
-            Nombre = doctorDto.Nombre,
-            Apellido = doctorDto.Apellido,
-            NumeroDeTelefono = doctorDto.NumeroDeTelefono
-            };
-            _repo.Agregar(doctor);
-            _repo.GuardarCambios();
+            try
+            {
+                var result = _doctorServices.AgregarDoctor(
+                    doctorDto.Cedula, 
+                    doctorDto.Nombre, 
+                    doctorDto.Apellido, 
+                    doctorDto.NumeroDeTelefono
+                    );
 
-            return Ok(doctor);
+                return Ok(result);
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
+            }
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+
+                return StatusCode(400,
+                    new
+                    {
+                        Error = "410025",
+                        Mensaje = "Error: Doctor no fue procesado",
+                        Data = ve.Message
+                    });
+            }
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.Message);
+            //    return StatusCode(500, "Error Interno del Servidor");
+            //}
         }
+
+
+
+
 
         //Consultar un Doctor
         [HttpGet]
-        public ActionResult consultarDoctor(/*[FromQuery] ClienteParameters clienteParameters*/)
+        public ActionResult ConsultarDoctor([FromQuery] DoctorParameters doctorParameters)
         {
-            var doctor = _repo.Consultar(/*clienteParameters*/);
-            return Ok(doctor);
+            //ToDo: terminar consultarDoctor
+            var result = _doctorServices.ConsultarDoctores(doctorParameters);
+            return Ok(result);
         }
+
+
+
+
+
         //Consultar un Doctor por Id
         [HttpGet("{Id}")]
         public ActionResult ConsultarDoctor([FromRoute] string id)
         {
-            Doctor doctor = _repo.Consultar().Where(x => x.Id == id).FirstOrDefault();//Todo: Refactorizar
+            var result = _doctorServices.ConsultarDoctorPorId(id);
             try
             {
-                if (doctor == null)
+                if (result == null)
                 {
                     return NotFound("Doctor no encontrado");
                 }
 
 
 
-                return Ok(doctor);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message);
+                _logger.LogError(ex.Message);
 
                 return StatusCode(500,
                     new
                     {
                         Error = "410025",
                         Mensaje = "Error: Doctor no fue procesado",
-                        Data = doctor
+                        Data = result
                     });
             }
         }
@@ -77,21 +115,26 @@ namespace Api_Consultorio.Controllers
         [HttpPut("{id}")]
         public ActionResult ActualizarDoctor(string id, [FromBody] ActualizarDoctorDto doctor)
         {
-            var _doctor = _repo.ConsultarPorId(id);
             try
             {
-                if (_doctor == null)
-                {
-                    return NotFound("Cliente no encontrado");
-                }
-
-                _doctor.Nombre = doctor.Nombre ?? _doctor.Nombre;
-                _doctor.Apellido = doctor.Apellido ?? _doctor.Apellido;
-                _doctor.Cedula = doctor.Cedula ?? _doctor.Cedula;
-                _doctor.NumeroDeTelefono = doctor.NumeroDeTelefono ?? _doctor.NumeroDeTelefono;
-
-                _repo.Actualizar(_doctor);
-                return Ok(_doctor);
+                var result = _doctorServices.ActualizarDoctor(
+                    id, 
+                    doctor.Cedula, 
+                    doctor.Nombre, 
+                    doctor.Apellido, 
+                    doctor.NumeroDeTelefono
+                    );
+                return Ok(result);
+            }
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
             }
             catch (Exception ex)
             {
@@ -99,7 +142,7 @@ namespace Api_Consultorio.Controllers
                     new
                     {
                         Error = "410025",
-                        Mensaje = "Error: Cliente no fue procesado",
+                        Mensaje = "Error: Doctor no fue procesado",
                         Data = doctor
                     });
             }
@@ -109,16 +152,17 @@ namespace Api_Consultorio.Controllers
         [HttpDelete("{Id}")]
         public ActionResult EliminarDoctor([FromRoute] string id)
         {
-            Doctor doctor = _repo.ConsultarPorId(id);
+            Doctor doctor = _doctorServices.ConsultarDoctorPorId(id);
             try
             {
-                if (doctor == null)
-                {
-                    return NotFound("Doctor no encontrado");
-                }
-                _repo.Eliminar(id, doctor);
+                _doctorServices.EliminarDoctor(id);
             }
-            catch
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500,
                     new
@@ -130,5 +174,6 @@ namespace Api_Consultorio.Controllers
             }
             return Ok(doctor);
         }
+        #endregion
     }
 }

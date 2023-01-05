@@ -15,7 +15,7 @@ namespace Consultorio.Business.Interfaces.Repositorios
         Cliente ConsultarPorExistencia(string nombre, string apellido, DateTime? fecha);
         Cliente ConsultarporNombre(string nombre);
         IEnumerable<Cliente> Consultar(ClienteParameters clienteParameters);
-        bool FechaDisponible(string clienteId, DateTime fecha);
+        bool FechaDisponible(string clienteId, DateTime? fecha);
 
     }
 }

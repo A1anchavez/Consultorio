@@ -26,54 +26,52 @@ namespace Consultorio.Formularios
 
         private void btn_aceptar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                IRepository<Cliente> repo = new ClienteSqliteRepository(new SQLiteContext());
-                var cliente = new Cliente(repo, txt_nombre.Text,
-                            txt_apellidos.Text,
-                            dtp_fechaNacimiento.Value,
-                            txt_direccion.Text);
+            //try
+            //{
+            //    IRepository<Cliente> repo = new ClienteSqliteRepository(new SQLiteContext());
+            //    var cliente = new Cliente(repo, txt_nombre.Text,
+            //                txt_apellidos.Text,
+            //                dtp_fechaNacimiento.Value,
+            //                txt_direccion.Text);
 
-                //Agrega un elemento a la lista de tareas List<Cliente>
-                cliente.Agregar_Cliente();
+            //    //Agrega un elemento a la lista de tareas List<Cliente>
+            //    cliente.Agregar_Cliente();
 
-                ListaClientes.Add(cliente);
+            //    ListaClientes.Add(cliente);
 
-                LimpiarFormulario();
+            //    LimpiarFormulario();
 
-                dtg_ListaClientes.DataSource = null;
-                dtg_ListaClientes.DataSource = ListaClientes;
-                dtg_ListaClientes.Refresh();
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //    dtg_ListaClientes.DataSource = null;
+            //    dtg_ListaClientes.DataSource = ListaClientes;
+            //    dtg_ListaClientes.Refresh();
+            //}
+            //catch (ArgumentException ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //}
 
         }
 
 
         private void ListaClientes_Shown(object sender, EventArgs e)
         {
-            try
-            {
-                //Context context = new();
+            //try
+            //{
+            //    var cliente = new Cliente();
+            //    ListaClientes = cliente.CargarClientes();
+            //    dtg_ListaClientes.DataSource = ListaClientes;
+            //}
+            //catch (Exception)
+            //{
 
-                var cliente = new Cliente();
-                ListaClientes = cliente.CargarClientes();
-                dtg_ListaClientes.DataSource = ListaClientes;
-            }
-            catch (Exception)
-            {
+            //    MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
-
-            }
+            //}
 
         }
 
@@ -82,7 +80,7 @@ namespace Consultorio.Formularios
             try
             {
                 Cliente cliente = new();
-                cliente.GuardarListaClientes(ListaClientes);
+                //cliente.GuardarListaClientes(ListaClientes);
             }
             catch (Exception)
             {

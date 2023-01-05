@@ -33,18 +33,9 @@ namespace Api_Consultorio.Controllers
         {
             try
             {
-                Cliente cliente = new Cliente()
-                {
-                    //Id = clienteDto.Id,
-                    Nombre = clienteDto.Nombre,
-                    Apellido = clienteDto.Apellido,
-                    FechaDeNacimiento = clienteDto.FechaDeNacimiento,
-                    Direccion = clienteDto.Direccion
-                };
+                var result = _clienteServices.AgregarCliente(clienteDto.Nombre, clienteDto.Apellido, clienteDto.FechaDeNacimiento, clienteDto.Direccion);
 
-                _clienteServices.AgregarCliente(cliente);
-
-                return Ok(cliente);
+                return Ok(result);
             }
             catch (ValidationException ve)
             {
@@ -68,7 +59,7 @@ namespace Api_Consultorio.Controllers
 
         //Consultar un Cliente
         [HttpGet]
-        public ActionResult consultarCliente([FromQuery] ClienteParameters clienteParameters)
+        public ActionResult ConsultarCliente([FromQuery] ClienteParameters clienteParameters)
         {
             var result = _clienteServices.ConsultarClientes(clienteParameters);
             //var metadata = new
@@ -121,11 +112,20 @@ namespace Api_Consultorio.Controllers
         [HttpPut("{id}")]
         public ActionResult ActualizarCliente(string id, [FromBody] ActualizarClienteDto cliente)
         {
-            // ToDo: checar actualizar
             try
             {
-                var result = _clienteServices.ActualizarCliente(id, cliente.Nombre, cliente.Apellido, cliente.Direccion, cliente.FechaDeNacimiento);
+                var result = _clienteServices.ActualizarCliente(id, cliente.Nombre, cliente.Apellido, cliente.FechaDeNacimiento, cliente.Direccion);
                 return Ok(result);
+            }
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch(ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
             }
             catch (Exception ex)
             {
@@ -144,17 +144,17 @@ namespace Api_Consultorio.Controllers
         [HttpDelete("{Id}")]
         public ActionResult EliminarCliente([FromRoute] string id)
         {
-            Cliente cliente = _repo.ConsultarPorId(id);
+            Cliente cliente = _clienteServices.ConsultarClientePorId(id);
             try
             {
-                //return consulta;
-                if (cliente == null)
-                {
-                    return NotFound("Cliente no encontrado");
-                }
-                _repo.Eliminar(id, cliente);
+                _clienteServices.EliminarCliente(id);
             }
-            catch
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch(Exception ex)
             {
                 return StatusCode(500,
                     new
@@ -168,6 +168,9 @@ namespace Api_Consultorio.Controllers
         }
         #endregion
 
+
+
+        //ToDo: terminar consultaController
         #region Consulta Post/Get/Put/Delete
 
         //Agregar una Consulta
@@ -176,20 +179,12 @@ namespace Api_Consultorio.Controllers
         {
             try
             {
-                
-                //Cliente cliente = _clienteServices.ConsultarClientePorId(idCliente);
-                //Doctor doctor = _doctorServices.ConsultarDoctorPorId(consultaDto.DoctorId);
-                Consulta consulta2 = new Consulta()
-                {
-                    ClienteId = consultaDto.ClienteId,
-                   // Cliente = cliente,
-                    DoctorId = consultaDto.DoctorId,
-                   // Doctor = doctor,
-                    FechaConsulta = consultaDto.FechaConsulta,
-                    Motivo = consultaDto.Motivo
-                };
-                var result = _clienteServices.AgregarConsulta(consulta2);
-                //--------
+                var result = _clienteServices.AgregarConsulta(
+                    consultaDto.ClienteId, 
+                    consultaDto.DoctorId, 
+                    consultaDto.FechaConsulta, 
+                    consultaDto.Motivo
+                    );
                 return Ok(result);
             }
             catch (ValidationException ve)
@@ -201,6 +196,11 @@ namespace Api_Consultorio.Controllers
             {
                 _logger.LogError("Argumentos invalidos {consulta}", consultaDto);
                 return BadRequest("Objeto requerido.");
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
             }
             catch (Exception ex)
             {

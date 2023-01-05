@@ -27,7 +27,7 @@ namespace Consultorio.Business.Servicios
             _doctorRepo = doctorRepo;
         }
 
-        public Cliente ActualizarCliente(string id,string nombre, string apellido, string direccion, DateTime? fecha)
+        public Cliente ActualizarCliente(string id,string nombre, string apellido, DateTime? fecha, string direccion)
         {
 
             var cliente = _repo.ConsultarPorId(id) ?? throw new ValidationException("No se encontro el cliente");
@@ -37,53 +37,59 @@ namespace Consultorio.Business.Servicios
             cliente.Direccion = direccion ?? cliente.Direccion;
             cliente.FechaDeNacimiento = fecha ?? cliente.FechaDeNacimiento;
 
+            _repo.Actualizar(cliente);
             _repo.GuardarCambios();
-            
-
             return cliente;
         }
 
-        public Cliente AgregarCliente(Cliente cliente)
+        public Cliente AgregarCliente(string nombre, string apellido, DateTime? fecha, string direccion)
         {
+            Cliente cliente = new Cliente()
+            {
+                Nombre = nombre,
+                Apellido = apellido,
+                FechaDeNacimiento = fecha,
+                Direccion = direccion
+            };
             var result = _repo.ConsultarPorExistencia(cliente.Nombre, cliente.Apellido, cliente.FechaDeNacimiento);
                 if (!(result is null))
                 {
-                    throw new ValidationException("El cliente ya existe en la base de datos "+result.Id);
+                    throw new ValidationException("El cliente ya existe en la base de datos con un Id: "+result.Id);
                 }
                 _repo.Agregar(cliente);
                 _repo.GuardarCambios();
                 return cliente;
         }
 
-        public Consulta AgregarConsulta(Consulta consulta)
+        public Consulta AgregarConsulta(string clienteId, string doctorId, DateTime? fecha, string? motivo)
         {
+            Cliente cliente = _repo.ConsultarPorId(clienteId);
+            Doctor doctor = _doctorRepo.ConsultarPorId(doctorId);
             //Validar que el cliente exista
-            if (_repo.ConsultarPorId(consulta.ClienteId) == null)
+            if (cliente == null)
             {
                 throw new ValidationException("El cliente no existe");
             }
             //Validar que el doctor exista
-            if (_doctorRepo.ConsultarPorId(consulta.DoctorId) == null)
+            if (doctor == null)
             {
                 throw new ValidationException("El Doctor no existe");
             }
 
             //Validar que ni el doctor ni el paciente tengan citas en mismo horario
-            if (_doctorRepo.FechaDisponible(consulta.DoctorId, consulta.FechaConsulta) &&
-                _repo.FechaDisponible(consulta.ClienteId, consulta.FechaConsulta))
+            if (_doctorRepo.FechaDisponible(doctorId, fecha) &&
+                _repo.FechaDisponible(clienteId, fecha))
                 throw new ValidationException("Fecha no disponible");
 
-            //var consulta = new Consulta(
-            //    clienteId,
-            //    doctorId,
-            //    fechaConsulta,
-            //    motivo
-            //);
-
-
-            // cita.Update(doctorId,fechaConsulta);// = DateTime.Now.AddDays(-1);
-
-
+            Consulta consulta = new Consulta()
+            {
+                ClienteId = clienteId,
+                Cliente = cliente,
+                DoctorId = doctorId,
+                Doctor = doctor,
+                FechaConsulta=fecha.Value,
+                Motivo=motivo
+            };
             _consultaRepo.Agregar(consulta);
             _consultaRepo.GuardarCambios();
 
@@ -98,16 +104,23 @@ namespace Consultorio.Business.Servicios
         }
 
         
-
+        //ClienteParameters clienteParameters
         public Cliente ConsultarClientes(ClienteParameters clienteParameters)
         {
             var cliente = _repo.Consultar(clienteParameters);
-            return (Cliente)cliente;
+            return null;
+            //return cliente;
         }
 
-        public Cliente EliminarCliente()
+        public Cliente EliminarCliente(string id)
         {
-            throw new NotImplementedException();
+           Cliente cliente = _repo.ConsultarPorId(id);
+            if (cliente == null)
+            {
+                throw new ValidationException("Cliente no encontrado");
+            }
+            _repo.Eliminar(cliente);
+            return cliente;
         }
     }
 }

@@ -70,7 +70,7 @@ namespace Infraestructura.TextFile
             return Consultar().Where(x => x.Id.Equals(Id)).FirstOrDefault();
         }
 
-        public void Eliminar(string Id, Consulta t)
+        public void Eliminar(Consulta t)
         {
             throw new NotImplementedException();
         }

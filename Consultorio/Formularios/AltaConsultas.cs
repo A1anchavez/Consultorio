@@ -27,80 +27,81 @@ namespace Consultorio.Formularios
         }
         #region Eventos Controles
 
+
         private void btn_aceptar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                IRepository<Consulta> repo = new ConsultaSQLiteRepository(new SQLiteContext());
-                var consulta = new Consulta(repo,                            
-                            txt_NomDoc.Text,
-                            txt_NomClnt.Text,
-                            dtp_fechaConsulta.Value,
-                            txt_MotCon.Text);
+            //    try
+            //    {
+            //        IRepository<Consulta> repo = new ConsultaSQLiteRepository(new SQLiteContext());
+            //        var consulta = new Consulta(repo,                            
+            //                    txt_NomDoc.Text,
+            //                    txt_NomClnt.Text,
+            //                    dtp_fechaConsulta.Value,
+            //                    txt_MotCon.Text);
 
-                //Agrega un elemento a la lista de tareas List<ToDo>
-                consulta.AgregarConsulta();
+            //        //Agrega un elemento a la lista de tareas List<ToDo>
+            //        consulta.AgregarConsulta();
 
-                ListaConsultas.Add(consulta);
+            //        ListaConsultas.Add(consulta);
 
-                LimpiarFormulario();
+            //        LimpiarFormulario();
 
-                dts_listaConsultas.DataSource = null;
-                dts_listaConsultas.DataSource = ListaConsultas;
-                dts_listaConsultas.Refresh();
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //        dts_listaConsultas.DataSource = null;
+            //        dts_listaConsultas.DataSource = ListaConsultas;
+            //        dts_listaConsultas.Refresh();
+            //    }
+            //    catch (ArgumentException ex)
+            //    {
+            //        MessageBox.Show(ex.Message);
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //    }
 
         }
 
 
         private void ListaConsultas_Shown(object sender, EventArgs e)
         {
-            try
-            {
-                //Consultas
-                var consulta = new Consulta();
-                ListaConsultas = consulta.CargarConsultas();
-                dts_listaConsultas.DataSource = ListaConsultas;
+            //    try
+            //    {
+            //        //Consultas
+            //        var consulta = new Consulta();
+            //        ListaConsultas = consulta.CargarConsultas();
+            //        dts_listaConsultas.DataSource = ListaConsultas;
 
-                //Clientea
-                var cliente = new Cliente();
-                ListaClientes = cliente.CargarClientes();
-                dts_ListaClientes.DataSource = ListaClientes;
+            //        //Clientea
+            //        var cliente = new Cliente();
+            //        ListaClientes = cliente.CargarClientes();
+            //        dts_ListaClientes.DataSource = ListaClientes;
 
-                //Doctores
-                var doctor = new Doctor();
-                ListaDoctores = doctor.CargarDoctores();
-                dts_ListaDoctores.DataSource = ListaDoctores;
-            }
-            catch (Exception)
-            {
+            //        //Doctores
+            //        var doctor = new Doctor();
+            //        ListaDoctores = doctor.CargarDoctores();
+            //        dts_ListaDoctores.DataSource = ListaDoctores;
+            //    }
+            //    catch (Exception)
+            //    {
 
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //        MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //    }
         }
 
         private void btn_registrar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Consulta consulta = new();
-                consulta.GuardarListaConsultas(ListaConsultas);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Ha ocurrido un error.", "Informativo");
+            //    try
+            //    {
+            //        Consulta consulta = new();
+            //        consulta.GuardarListaConsultas(ListaConsultas);
+            //    }
+            //    catch (Exception)
+            //    {
+            //        MessageBox.Show("Ha ocurrido un error.", "Informativo");
 
-            }
+            //    }
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Repositorios;
+using Consultorio.Business.Modelos;
 using Infraestructura.SQLServer.Contextos;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,19 @@ namespace Infraestructura.SQLServer.Repositorios
 
         }
 
-        public bool FechaDisponible(string doctorId, DateTime fecha)
+        public IEnumerable<Doctor> Consultar(DoctorParameters doctorParameters)
+        {
+            return Consultar()
+                .OrderBy(ow=> ow.Nombre)
+                .Skip((doctorParameters.PageNumber-1)*doctorParameters.PageSize)
+                .Take(doctorParameters.PageSize)
+                .ToList();
+        }
+
+        public bool FechaDisponible(string doctorId, DateTime? fecha)
         {
             return !ConsultarPorId(doctorId).
-                Consultas.Any(x => x.FechaConsulta.Date == fecha.Date);
+                Consultas.Any(x => x.FechaConsulta.Date == fecha);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Infraestructura.InMemroy
             return Doctor.Where(x => x.Id.Equals(Id)).FirstOrDefault();
         }
 
-        public void Eliminar(string Id, Doctor t)
+        public void Eliminar(Doctor t)
         {
             throw new NotImplementedException();
         }
