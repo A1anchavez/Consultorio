@@ -3,10 +3,12 @@ using Api_Consultorio.Modelos;
 using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Interfaces.Servicios;
+using Consultorio.Business.Soportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -105,11 +107,18 @@ namespace Consultorio.Business.Servicios
 
         
         //ClienteParameters clienteParameters
-        public Cliente ConsultarClientes(ClienteParameters clienteParameters)
+        public PagedList<Cliente> ConsultarClientes(ClienteParameters clienteParameters)
         {
             var cliente = _repo.Consultar(clienteParameters);
-            return null;
-            //return cliente;
+            var metadata = new
+            {
+                cliente.TotalCount,
+                cliente.PageSize,
+                cliente.CurrentPage,
+                cliente.HasNext,
+                cliente.HasPrevious
+            };
+            return cliente;
         }
 
         public Cliente EliminarCliente(string id)

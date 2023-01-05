@@ -1,6 +1,7 @@
 ﻿using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Modelos;
+using Consultorio.Business.Soportes;
 using Infraestructura.SQLServer.Contextos;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,10 @@ namespace Infraestructura.SQLServer.Repositorios
 
         }
 
-        public IEnumerable<Doctor> Consultar(DoctorParameters doctorParameters)
+        public PagedList<Doctor> Consultar(DoctorParameters doctorParameters)
         {
-            return Consultar()
-                .OrderBy(ow=> ow.Nombre)
-                .Skip((doctorParameters.PageNumber-1)*doctorParameters.PageSize)
-                .Take(doctorParameters.PageSize)
-                .ToList();
+            return PagedList<Doctor>.ToPagedList(FindAll().OrderBy(on=> on.Nombre),
+                doctorParameters.PageNumber, doctorParameters.PageSize);
         }
 
         public bool FechaDisponible(string doctorId, DateTime? fecha)

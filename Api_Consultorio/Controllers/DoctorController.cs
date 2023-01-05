@@ -6,7 +6,9 @@ using Consultorio.Business.Modelos;
 using Consultorio.Business.Servicios;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace Api_Consultorio.Controllers
 {
@@ -74,6 +76,18 @@ namespace Api_Consultorio.Controllers
         {
             //ToDo: terminar consultarDoctor
             var result = _doctorServices.ConsultarDoctores(doctorParameters);
+
+            var metadata = new
+            {
+                result.TotalCount,
+                result.PageSize,
+                result.CurrentPage,
+                result.HasNext,
+                result.HasPrevious
+            };
+
+            Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(metadata));
+            _logger.LogInformation($"Se mostraron {result.TotalCount}  doctores de la base de datos");
             return Ok(result);
         }
 

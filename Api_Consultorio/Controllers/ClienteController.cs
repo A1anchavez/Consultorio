@@ -62,16 +62,19 @@ namespace Api_Consultorio.Controllers
         public ActionResult ConsultarCliente([FromQuery] ClienteParameters clienteParameters)
         {
             var result = _clienteServices.ConsultarClientes(clienteParameters);
-            //var metadata = new
-            //{
-            //    cliente.TotalCount,
-            //    cliente.PageSize,
-            //    cliente.CurrentPage,
-            //    cliente.HasNext,
-            //    cliente.HasPrevious
-            //};
+            
+            var metadata = new
+            {
+                result.TotalCount,
+                result.PageSize,
+                result.CurrentPage,
+                result.HasNext,
+                result.HasPrevious
+            };
 
-            //Response.Headers.Add("X-Paginacion", JsonConvert.SerializeObject(metadata));
+            Response.Headers.Add("X-Paginacion", JsonConvert.SerializeObject(metadata));
+            _logger.LogInformation($"Se mostraron {result.TotalCount}  doctores de la base de datos");
+
             return Ok(result);
         }
 

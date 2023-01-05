@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Consultorio.Business.Modelos
 {
-    public class ConsultaParameters
+    public class ConsultaParameters: QuerryStringParameters
     {
     }
 }

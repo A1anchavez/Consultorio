@@ -2,10 +2,12 @@
 using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Interfaces.Servicios;
 using Consultorio.Business.Modelos;
+using Consultorio.Business.Soportes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,14 +54,22 @@ namespace Consultorio.Business.Servicios
             return doctor;
         }
 
-        public IEnumerable<Doctor> ConsultarDoctores(DoctorParameters doctorParameters)
+        public PagedList<Doctor> ConsultarDoctores(DoctorParameters doctorParameters)
         {
             //ToDo: revisar ConsultarDoctores
             var doctor = _repo.Consultar(doctorParameters);
-            //return null;
+
+            var metadata = new
+            {
+                doctor.TotalCount,
+                doctor.PageSize,
+                doctor.CurrentPage,
+                doctor.HasNext,
+                doctor.HasPrevious
+            };
+
             return doctor;
         }
-
         public Doctor ConsultarDoctorPorId(string id)
         {
             var doctor = _repo.Consultar().Where(x => x.Id == id).FirstOrDefault();
