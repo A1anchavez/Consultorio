@@ -43,7 +43,11 @@ namespace Infraestructura.SQLServer.Contextos
             builder.Entity<Consulta>().Property(p=>p.FechaConsulta).IsRequired().HasColumnName("fechaDeConsulta");
             builder.Entity<Consulta>().Property(p => p.Motivo).HasMaxLength(150).HasColumnName("motivo");
 
-
+            //Usuario
+            builder.Entity<Usuario>().ToTable("Usuarios", "cat").HasKey(e => e.Id);
+            builder.Entity<Usuario>().Property(p => p.NombreUsuario).HasMaxLength(50).IsRequired().HasColumnName("nombreUsuario");
+            builder.Entity<Usuario>().Property(p => p.Contraseña).HasMaxLength(50).IsRequired().HasColumnName("contraseña");
+            builder.Entity<Usuario>().Property(p => p.Rol).HasMaxLength(50).IsRequired().HasColumnName("rol");
         }
     }
 }

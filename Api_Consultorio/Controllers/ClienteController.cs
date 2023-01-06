@@ -34,7 +34,7 @@ namespace Api_Consultorio.Controllers
             try
             {
                 var result = _clienteServices.AgregarCliente(clienteDto.Nombre, clienteDto.Apellido, clienteDto.FechaDeNacimiento, clienteDto.Direccion);
-
+                var result2 = _clienteServices.AgregarUsuario(result.Id, clienteDto.NombreUsuario, clienteDto.Contraseña);
                 return Ok(result);
             }
             catch (ValidationException ve)
@@ -62,7 +62,7 @@ namespace Api_Consultorio.Controllers
         public ActionResult ConsultarCliente([FromQuery] ClienteParameters clienteParameters)
         {
             var result = _clienteServices.ConsultarClientes(clienteParameters);
-            
+
             var metadata = new
             {
                 result.TotalCount,
@@ -77,8 +77,6 @@ namespace Api_Consultorio.Controllers
 
             return Ok(result);
         }
-
-
 
         //Consultar un Cliente por Id
         [HttpGet("{Id}")]
@@ -125,7 +123,7 @@ namespace Api_Consultorio.Controllers
                 _logger.LogError(ve.Message);
                 return BadRequest(ve.Message);
             }
-            catch(ArgumentException ae)
+            catch (ArgumentException ae)
             {
                 _logger.LogError(ae.Message);
                 return BadRequest(ae.Message);
@@ -157,7 +155,7 @@ namespace Api_Consultorio.Controllers
                 _logger.LogError(ve.Message);
                 return BadRequest(ve.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500,
                     new
@@ -183,9 +181,9 @@ namespace Api_Consultorio.Controllers
             try
             {
                 var result = _clienteServices.AgregarConsulta(
-                    consultaDto.ClienteId, 
-                    consultaDto.DoctorId, 
-                    consultaDto.FechaConsulta, 
+                    consultaDto.ClienteId,
+                    consultaDto.DoctorId,
+                    consultaDto.FechaConsulta,
                     consultaDto.Motivo
                     );
                 return Ok(result);
@@ -216,24 +214,110 @@ namespace Api_Consultorio.Controllers
         //[HttpGet]
         //public ActionResult ConsultarConsulta([FromQuery] Consulta consulta)
         //{
-        //    //var consulta2 = _repo.Consultar(consulta);
-        //    //return (consulta2);
+
         //    return Ok(consulta);
         //}
 
-        ////Actualizar una Consulta
-        //[HttpPut("{idCliente}/citas/{idCita}")]
-        //public IActionResult ActualizarCita()
-        //{
-        //    return Ok();
-        //}
 
-        ////Eliminar una Consulta
-        //[HttpDelete("{idCliente}/citas/{idCita}")]
-        //public IActionResult EliminarCita()
-        //{
-        //    return Ok();
-        //}
+        //ToDo: confirmar rutas
+
+        //Consultar una consulta por id
+        [HttpGet("{idCliente}/consultas/{idConsulta}")]
+        public ActionResult ConsultarConsulta([FromRoute] string idCliente)
+        {
+            var result = _clienteServices.ConsultarConsultaPorId(idCliente);
+            try
+            {
+                if (result == null)
+                {
+                    return NotFound("Consulta no encontrada");
+                }
+
+
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return StatusCode(500,
+                    new
+                    {
+                        Error = "410025",
+                        Mensaje = "Error: Consulta no fue procesada",
+                        Data = result
+                    });
+            }
+        }
+
+
+        //Actualizar una Consulta
+        [HttpPut("{idCliente}/citas/{idCita}")]
+        public IActionResult ActualizarCita(string id, [FromBody] ActualizarConsultaDto consulta)
+        {
+            try
+            {
+                var result = _clienteServices.ActualizarConsulta(
+                    id,
+                    consulta.DoctorId,
+                    consulta.FechaDeConsulta,
+                    consulta.Motivo);
+                return Ok(result);
+            }
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,
+                    new
+                    {
+                        Error = "410025",
+                        Mensaje = "Error: Consulta no fue procesada",
+                        Data = consulta
+                    });
+            }
+        }
+
+        //Eliminar una Consulta
+        [HttpDelete("{idCliente}/citas/{idCita}")]
+        public IActionResult EliminarCita([FromRoute] string id)
+        {
+            Consulta consulta = _clienteServices.ConsultarConsultaPorId(id);
+            try
+            {
+                _clienteServices.EliminarConsulta(id);
+            }
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,
+                    new
+                    {
+                        Error = "410025",
+                        Mensaje = "Error: Consulta no fue procesada",
+                        Data = consulta
+                    });
+            }
+            return Ok(consulta);
+        }
         #endregion
+        //public dynamic IniciarSesion([FromBody] object optData)
+        //{
+        //    var result = _clienteServices.IniciarSesion(optData);
+        //    //ps a ver que royal
+        //}
     }
 }

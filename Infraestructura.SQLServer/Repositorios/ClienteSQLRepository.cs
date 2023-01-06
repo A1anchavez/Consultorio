@@ -44,18 +44,9 @@ namespace Infraestructura.SQLServer.Repositorios
 
         public bool FechaDisponible(string clienteId, DateTime? fecha)
         {
-            return !ConsultarPorId(clienteId).
-                Consultas.Any(x => x.FechaConsulta.Date == fecha);
+            var cliente = _context.Set<Cliente>().Where(x => x.Consultas.Where(x => x.ClienteId == clienteId && x.FechaConsulta.Date == fecha.Value.Date).Any())
+                .Include(x => x.Consultas).ToList();
+            return !cliente.Any();
         }
-        //public IEnumerable<Cliente> Consultar(ClienteParameters clienteParameters)
-        //{
-        //    //IQueryable<Cliente> no sabemos si esta bien
-
-        //    //return PagedList<Cliente>.ToPagedList((FindAll().OrderBy(x => x.Nombre),
-        //    //    clienteParameters.pageNumber, clienteParameters.PageSize));
-        //    throw new NotImplementedException();
-
-
-        //}
     }
 }

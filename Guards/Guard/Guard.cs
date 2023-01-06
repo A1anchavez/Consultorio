@@ -43,7 +43,7 @@ namespace Transversal.Guards
 
         public static DateTime HourBetween(this DateTime value, int min, int max, [CallerArgumentExpression("value")] string property = "")
         {
-            if (value.Hour >= min && value.Hour <= max)
+            if (value.Hour < min || value.Hour > max)
                 throw new ArgumentException("Valor no permitido", property);
 
 
@@ -66,21 +66,27 @@ namespace Transversal.Guards
             return value;
         }
 
-        public static DateTime AfterNow(this DateTime value, Period periodo = Period.Hour, [CallerArgumentExpression("value")] string property = "")
+        public static DateTime AfterNow(this DateTime value,  string property)
         {
-            var newDate = periodo switch
+            var newDate = DateTime.Now.AddDays(1);
+            if(value < newDate)
             {
-                Period.Hour => value.AddHours(1),
-                Period.Day => value.AddDays(1),
-                Period.Month => value.AddMonths(1),
-                Period.Year => value.AddYears(1),
-                _ => throw new ArgumentException("Opción fuera del indice", nameof(periodo))
-            };
-
-            if (newDate >= DateTime.Now)
                 throw new ArgumentException("Fecha fuera del intervalo", property);
-
+            }
             return value;
+            //var newDate = periodo switch
+            //{
+            //    Period.Hour => value.AddHours(1),
+            //    Period.Day => value.AddDays(1),
+            //    Period.Month => value.AddMonths(1),
+            //    Period.Year => value.AddYears(1),
+            //    _ => throw new ArgumentException("Opción fuera del indice", nameof(periodo))
+            //};
+
+            //if (newDate >= DateTime.Now)
+            //    throw new ArgumentException("Fecha fuera del intervalo", property);
+
+            //return value;
 
 
         }

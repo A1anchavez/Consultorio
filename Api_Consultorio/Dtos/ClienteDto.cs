@@ -9,5 +9,7 @@ namespace Api_Consultorio.Dtos
         public string Apellido { get; set; }
         public DateTime FechaDeNacimiento { get; set; }
         public string Direccion { get; set; }
+        public string NombreUsuario { get; set; }
+        public string Contraseña { get; set; }
     }
 }

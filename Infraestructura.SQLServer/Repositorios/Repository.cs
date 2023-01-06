@@ -11,7 +11,7 @@ namespace Infraestructura.SQLServer.Repositorios
 {
     public class Repository<T> : IRepository<T> where T: class, IEntity, new()
     {
-        private readonly DbContext _context;
+        protected readonly DbContext _context;
         public Repository(DbContext context)
         {
             _context = context;
