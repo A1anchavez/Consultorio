@@ -24,6 +24,7 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;
+builder.Services.AddScoped<IUsuarioRepository, UsuarioSQLRepository>();
 
 builder.Services.AddScoped<IClienteServices, ClienteServices>();
 //builder.Services.AddScoped<IConsultaServices, ConsultaServices>();

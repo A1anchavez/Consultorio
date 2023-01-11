@@ -10,6 +10,11 @@ using System.ComponentModel.DataAnnotations;
 using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Interfaces.Servicios;
 using Consultorio.Business.Servicios;
+using Consultorio.Business.Modelos;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Api_Consultorio.Controllers
 {
@@ -19,11 +24,13 @@ namespace Api_Consultorio.Controllers
     {
         private readonly ILogger<ClienteController> _logger;
         private readonly IClienteServices _clienteServices;
+        private readonly IConfiguration _configuration;
 
-        public ClienteController(ILogger<ClienteController> logger, IClienteServices clienteServices)
+        public ClienteController(ILogger<ClienteController> logger, IClienteServices clienteServices, IConfiguration configuration)
         {
             _logger = logger;
             _clienteServices = clienteServices;
+            _configuration = configuration;
         }
 
 
@@ -73,7 +80,7 @@ namespace Api_Consultorio.Controllers
             };
 
             Response.Headers.Add("X-Paginacion", JsonConvert.SerializeObject(metadata));
-            _logger.LogInformation($"Se mostraron {result.TotalCount}  doctores de la base de datos");
+            _logger.LogInformation($"Se mostraron {result.TotalCount}  Clientes de la base de datos");
 
             return Ok(result);
         }
@@ -175,7 +182,7 @@ namespace Api_Consultorio.Controllers
         #region Consulta Post/Get/Put/Delete
 
         //Agregar una Consulta
-        [HttpPost("{idCliente}/consultas")]
+        [HttpPost("{idCliente}/consulta")]
         public ActionResult AgregarConsulta([FromRoute] string idCliente, [FromBody] CrearConsultaDto consultaDto)
         {
             try
@@ -211,23 +218,59 @@ namespace Api_Consultorio.Controllers
         }
 
         //Consultar una consulta jaja
-        //[HttpGet]
-        //public ActionResult ConsultarConsulta([FromQuery] Consulta consulta)
-        //{
+        [HttpGet("{idCliente}/consulta")]
+        public ActionResult ConsultarConsulta([FromQuery] ConsultaParameters consultaParameters)
+        {
+            var result = _clienteServices.ConsultarConsulta(consultaParameters);
 
-        //    return Ok(consulta);
-        //}
+            var response = new List<ConsultaResponseDto>();
+            foreach (var c in result)
+            {
+                var item = new ConsultaResponseDto()
+                {
+                    IdCliente = c.ClienteId,
+                    IdDoctor = c.DoctorId,
+                    FechaConsulta = c.FechaConsulta,
+                    Motivo = c.Motivo
+                };
+                response.Add(item);
+            }
+
+            var metadata = new
+            {
+                result.TotalCount,
+                result.PageSize,
+                result.CurrentPage,
+                result.HasNext,
+                result.HasPrevious
+            };
+
+            Response.Headers.Add("X-Paginacion", JsonConvert.SerializeObject(metadata));
+            _logger.LogInformation($"Se mostraron {result.TotalCount}  Consultas de la base de datos");
+
+            return Ok(response);
+        }
 
 
-        //ToDo: confirmar rutas
+
+
+        //ToDo: Revisar ruta de consultar por id, actualizar y eliminar consultas
 
         //Consultar una consulta por id
-        [HttpGet("{idCliente}/consultas/{idConsulta}")]
-        public ActionResult ConsultarConsulta([FromRoute] string idCliente)
+        [HttpGet("{idCliente}/consulta/{idConsulta}")]
+        public ActionResult ConsultarConsulta([FromRoute] string idCliente, [FromRoute] string idConsulta)
         {
-            var result = _clienteServices.ConsultarConsultaPorId(idCliente);
+            
+            
+            var result = _clienteServices.ConsultarConsultaPorId(idConsulta);
             try
             {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var token = _clienteServices.ValidarToken(identity);
+                if (token != true)
+                {
+                    throw new ArgumentException("Acceso restringido");
+                }
                 if (result == null)
                 {
                     return NotFound("Consulta no encontrada");
@@ -236,6 +279,16 @@ namespace Api_Consultorio.Controllers
 
 
                 return Ok(result);
+            }
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
             }
             catch (Exception ex)
             {
@@ -251,15 +304,21 @@ namespace Api_Consultorio.Controllers
             }
         }
 
-
         //Actualizar una Consulta
-        [HttpPut("{idCliente}/citas/{idCita}")]
-        public IActionResult ActualizarCita(string id, [FromBody] ActualizarConsultaDto consulta)
+        [HttpPut("{idCliente}/consulta/{idCita}")]
+        public IActionResult ActualizarConsulta([FromRoute]string id, [FromRoute] string idConsulta, [FromBody] ActualizarConsultaDto consulta)
         {
             try
             {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var token = _clienteServices.ValidarToken(identity);
+                if (token != true)
+                {
+                    throw new ArgumentException("Acceso restringido");
+                }
+
                 var result = _clienteServices.ActualizarConsulta(
-                    id,
+                    idConsulta,
                     consulta.DoctorId,
                     consulta.FechaDeConsulta,
                     consulta.Motivo);
@@ -288,18 +347,30 @@ namespace Api_Consultorio.Controllers
         }
 
         //Eliminar una Consulta
-        [HttpDelete("{idCliente}/citas/{idCita}")]
-        public IActionResult EliminarCita([FromRoute] string id)
+        [HttpDelete("{idCliente}/consulta/{idCita}")]
+        public IActionResult EliminarCita([FromRoute] string idCliente, [FromRoute] string idConsulta)
         {
-            Consulta consulta = _clienteServices.ConsultarConsultaPorId(id);
+            Consulta consulta = _clienteServices.ConsultarConsultaPorId(idConsulta);
             try
             {
-                _clienteServices.EliminarConsulta(id);
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var token = _clienteServices.ValidarToken(identity);
+                if (token != true)
+                {
+                    throw new ArgumentException("Acceso restringido");
+                }
+
+                _clienteServices.EliminarConsulta(idConsulta);
             }
             catch (ValidationException ve)
             {
                 _logger.LogError(ve.Message);
                 return BadRequest(ve.Message);
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
             }
             catch (Exception ex)
             {
@@ -314,10 +385,64 @@ namespace Api_Consultorio.Controllers
             return Ok(consulta);
         }
         #endregion
-        //public dynamic IniciarSesion([FromBody] object optData)
-        //{
-        //    var result = _clienteServices.IniciarSesion(optData);
-        //    //ps a ver que royal
-        //}
+
+        #region Usuario Metodos
+        [HttpPost("inicioSesion")]
+        public dynamic IniciarSesion([FromBody] object optData)
+        {
+            try
+            {
+
+
+                var result = _clienteServices.IniciarSesion(optData);
+                var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
+
+                var claims = new[]
+                {
+                new Claim(JwtRegisteredClaimNames.Sub, jwt.subject),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                new Claim("id", result.Id),
+                new Claim("usuario", result.NombreUsuario)
+            };
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
+                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                var token = new JwtSecurityToken(
+                    jwt.Issuer,
+                    jwt.Audience,
+                    claims,
+                    expires: DateTime.Now.AddMinutes(5),
+                    signingCredentials: signIn
+                    );
+                return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+            }
+
+            catch (ValidationException ve)
+            {
+                _logger.LogError(ve.Message);
+                return BadRequest(ve.Message);
+            }
+            catch (ArgumentException ae)
+            {
+                _logger.LogError(ae.Message);
+                return BadRequest(ae.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,
+                    new
+                    {
+                        Error = "410025",
+                        Mensaje = "Error: Consulta no fue procesada"
+                    });
+            }
+            
+            
+            //ps a ver que royal
+        }
+        //wA desayunar
+
+        #endregion
     }
 }

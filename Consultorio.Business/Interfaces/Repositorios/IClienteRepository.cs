@@ -16,6 +16,5 @@ namespace Consultorio.Business.Interfaces.Repositorios
         Cliente ConsultarporNombre(string nombre);
         PagedList<Cliente> Consultar(ClienteParameters clienteParameters);
         bool FechaDisponible(string clienteId, DateTime? fecha);
-
     }
 }

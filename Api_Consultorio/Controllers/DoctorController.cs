@@ -74,7 +74,6 @@ namespace Api_Consultorio.Controllers
         [HttpGet]
         public ActionResult ConsultarDoctor([FromQuery] DoctorParameters doctorParameters)
         {
-            //ToDo: terminar consultarDoctor
             var result = _doctorServices.ConsultarDoctores(doctorParameters);
 
             var metadata = new

@@ -1,5 +1,8 @@
-﻿using Consultorio.Business.Entidades;
+﻿using Api_Consultorio.Modelos;
+using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Repositorios;
+using Consultorio.Business.Modelos;
+using Consultorio.Business.Soportes;
 using Infraestructura.SQLServer.Contextos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,9 +20,10 @@ namespace Infraestructura.SQLServer.Repositorios
 
         }
 
-        public IEnumerable<Consulta> ConsultarCitasPrevias(string DoctorId)
+        public PagedList<Consulta> Consultar(ConsultaParameters consultaParameters)
         {
-            throw new NotImplementedException();
+            return PagedList<Consulta>.ToPagedList(FindAll().Include(x=> x.Cliente).Include(x=> x.Doctor).OrderBy(on => on.FechaConsulta),
+                        consultaParameters.PageNumber, consultaParameters.PageSize);
         }
     }
 }

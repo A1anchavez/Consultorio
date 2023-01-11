@@ -3,6 +3,7 @@ using Consultorio.Business.Entidades;
 using Consultorio.Business.Modelos;
 using Consultorio.Business.Soportes;
 using System;
+using System.Security.Claims;
 
 namespace Consultorio.Business.Interfaces.Servicios
 {
@@ -23,6 +24,7 @@ namespace Consultorio.Business.Interfaces.Servicios
         Consulta EliminarConsulta(string id);
 
         Usuario AgregarUsuario(string id, string nombre, string contraseña);
-
+        Usuario IniciarSesion(object optData);
+        public bool ValidarToken(ClaimsIdentity identity);
     }
 }

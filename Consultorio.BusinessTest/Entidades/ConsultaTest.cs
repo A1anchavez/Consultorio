@@ -25,10 +25,10 @@ namespace Consultorio.BusinessTest.Entidades
             Assert.Throws<ArgumentException>("FechaConsulta", () => consulta.FechaConsulta = hora);
         }
 
-        [Fact]
-        public void ValidarFechaDesocupada()
-        {
-
-        }
+        //[Fact]
+        //public void ValidarFechaDesocupada()
+        //{
+        //    var consulta = new Consulta();
+        //}
     }
 }

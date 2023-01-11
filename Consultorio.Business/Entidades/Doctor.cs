@@ -23,7 +23,9 @@ namespace Consultorio.Business.Entidades
             get => _numeroDeTelefono; 
             set => _numeroDeTelefono = value.IsNumber(nameof(NumeroDeTelefono)).EqualsNumber(10,nameof(NumeroDeTelefono)).HasWhiteSpace(nameof(NumeroDeTelefono)); 
         }
-        public List<Consulta> Consultas { get; set; }
+        //Propiedad de navegacion
+
+        public List<Consulta>? Consultas { get; set; }
 
         public Doctor()
         {

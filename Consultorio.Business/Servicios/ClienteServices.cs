@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,11 +26,12 @@ namespace Consultorio.Business.Servicios
         private readonly IUsuarioRepository _UsuarioRepo;
 
         public ClienteServices(IClienteRepository repo, IConsultaRepository consultaRepo,
-        IDoctorRepository doctorRepo)
+        IDoctorRepository doctorRepo, IUsuarioRepository usuarioRepo)
         {
             this._repo = repo;
             _consultaRepo = consultaRepo;
             _doctorRepo = doctorRepo;
+            _UsuarioRepo = usuarioRepo;
         }
 
         #region Cliente
@@ -138,22 +140,45 @@ namespace Consultorio.Business.Servicios
 
         public PagedList<Consulta> ConsultarConsulta(ConsultaParameters consultaParameters)
         {
-            throw new NotImplementedException();
+            var consulta = _consultaRepo.Consultar(consultaParameters);
+            var metadata = new
+            {
+                consulta.TotalCount,
+                consulta.PageSize,
+                consulta.CurrentPage,
+                consulta.HasNext,
+                consulta.HasPrevious
+            };
+            return consulta;
         }
 
         public Consulta ConsultarConsultaPorId(string id)
         {
-            return null;
+            var consulta = _consultaRepo.Consultar().Where(x => x.Id == id).FirstOrDefault();
+            return consulta;
         }
 
         public Consulta ActualizarConsulta(string id, string doctorId, DateTime? fecha, string motivo)
         {
-            throw new NotImplementedException();
+            var consulta = _consultaRepo.ConsultarPorId(id) ?? throw new ValidationException("No se encontro la consulta");
+            consulta.DoctorId = doctorId ?? consulta.DoctorId;
+            consulta.FechaConsulta = fecha ?? consulta.FechaConsulta;
+            consulta.Motivo = motivo ?? consulta.Motivo;
+
+            _consultaRepo.Actualizar(consulta);
+            _consultaRepo.GuardarCambios();
+            return consulta;
         }
 
         public Consulta EliminarConsulta(string id)
         {
-            return null;
+            Consulta consulta = _consultaRepo.ConsultarPorId(id);
+            if (consulta == null)
+            {
+                throw new ValidationException("Consulta no encontrado");
+            }
+            _consultaRepo.Eliminar(consulta);
+            return consulta;
         }
         #endregion
 
@@ -165,16 +190,36 @@ namespace Consultorio.Business.Servicios
             _UsuarioRepo.GuardarCambios();
             return usuario;
         }
-        //public object IniciarSesion(object optData)
-        //{
-        //    var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
-        //    string user = data.usuario.ToString();
-        //    string contraseña = data.contraseña.ToString();
+        public Usuario IniciarSesion(object optData)
+        {
+            var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
+            string user = data.usuario.ToString();
+            string contraseña = data.contraseña.ToString();
 
-        //    Usuario usuario = _UsuarioRepo.Consultar().Where(x => x.NombreUsuario == user
-        //    && x.Contraseña == contraseña).FirstOrDefault();
+            Usuario usuario = _UsuarioRepo.Consultar().Where(x => x.NombreUsuario == user
+            && x.Contraseña == contraseña).FirstOrDefault();
+            if (usuario == null)
+            {
+                throw new ArgumentException("Nombre de usuario o contraseña son incorrectos");
+            }
+            return usuario;
+        }
+        public bool ValidarToken(ClaimsIdentity identity)
+        {
+                if (identity.Claims.Count() == 0)
+                {
+                    throw new ArgumentException("Token invalido");
+                }
+                var id = identity.Claims.FirstOrDefault(x => x.Type == "id").Value;
 
-        //    //algo de IConfiguration?
-        //}
+                Usuario usuario = _UsuarioRepo.Consultar().Where(x => x.Id == id).FirstOrDefault();
+
+                if (usuario == null || usuario.Rol != "Cliente")
+                {
+                    throw new ArgumentException("Acceso restringido");
+                }
+            return true;
+            
+        }
     }
 }

@@ -56,7 +56,6 @@ namespace Consultorio.Business.Servicios
 
         public PagedList<Doctor> ConsultarDoctores(DoctorParameters doctorParameters)
         {
-            //ToDo: revisar ConsultarDoctores
             var doctor = _repo.Consultar(doctorParameters);
 
             var metadata = new
