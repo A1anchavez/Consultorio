@@ -2,6 +2,7 @@
 using Consultorio.Business.Entidades;
 using Consultorio.Business.Modelos;
 using Consultorio.Business.Soportes;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Security.Claims;
 

@@ -40,8 +40,10 @@ namespace Api_Consultorio.Controllers
         {
             try
             {
+                _logger.LogDebug("Iniciar Servicio Crear Cliente");
                 var result = _clienteServices.AgregarCliente(clienteDto.Nombre, clienteDto.Apellido, clienteDto.FechaDeNacimiento, clienteDto.Direccion);
                 var result2 = _clienteServices.AgregarUsuario(result.Id, clienteDto.NombreUsuario, clienteDto.Contraseña);
+                _logger.LogDebug("Terminar Servicio Crear Cliente");
                 return Ok(result);
             }
             catch (ValidationException ve)
@@ -176,9 +178,6 @@ namespace Api_Consultorio.Controllers
         }
         #endregion
 
-
-
-        //ToDo: terminar consultaController
         #region Consulta Post/Get/Put/Delete
 
         //Agregar una Consulta

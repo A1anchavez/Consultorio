@@ -5,6 +5,7 @@ using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Interfaces.Servicios;
 using Consultorio.Business.Modelos;
 using Consultorio.Business.Soportes;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using Transversal.Loggers;
 
 namespace Consultorio.Business.Servicios
 {
