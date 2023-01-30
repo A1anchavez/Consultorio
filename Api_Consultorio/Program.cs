@@ -28,7 +28,7 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 ////////////////
-
+builder.Services.AddMemoryCache();
 var connection = builder.Configuration.GetConnectionString("SQLConnectionString");
 builder.Services.ConfigureSQLDbContext(connection);
 

@@ -37,10 +37,10 @@
             this.txt_apellidos = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txt_numtel = new System.Windows.Forms.TextBox();
-            this.btn_aceptar = new System.Windows.Forms.Button();
             this.btn_registrar = new System.Windows.Forms.Button();
             this.dtg_ListaDoctores = new System.Windows.Forms.DataGridView();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn_consultar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_ListaDoctores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -109,19 +109,9 @@
             this.txt_numtel.Size = new System.Drawing.Size(249, 23);
             this.txt_numtel.TabIndex = 6;
             // 
-            // btn_aceptar
-            // 
-            this.btn_aceptar.Location = new System.Drawing.Point(12, 302);
-            this.btn_aceptar.Name = "btn_aceptar";
-            this.btn_aceptar.Size = new System.Drawing.Size(75, 23);
-            this.btn_aceptar.TabIndex = 8;
-            this.btn_aceptar.Text = "Aceptar";
-            this.btn_aceptar.UseVisualStyleBackColor = true;
-            this.btn_aceptar.Click += new System.EventHandler(this.btn_aceptar_Click);
-            // 
             // btn_registrar
             // 
-            this.btn_registrar.Location = new System.Drawing.Point(129, 302);
+            this.btn_registrar.Location = new System.Drawing.Point(12, 283);
             this.btn_registrar.Name = "btn_registrar";
             this.btn_registrar.Size = new System.Drawing.Size(75, 23);
             this.btn_registrar.TabIndex = 9;
@@ -148,15 +138,25 @@
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
-            // AltaDoctor
+            // btn_consultar
+            // 
+            this.btn_consultar.Location = new System.Drawing.Point(90, 345);
+            this.btn_consultar.Name = "btn_consultar";
+            this.btn_consultar.Size = new System.Drawing.Size(75, 23);
+            this.btn_consultar.TabIndex = 12;
+            this.btn_consultar.Text = "Consultar";
+            this.btn_consultar.UseVisualStyleBackColor = true;
+            this.btn_consultar.Click += new System.EventHandler(this.btn_consultar_Click);
+            // 
+            // AltaDoctores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_consultar);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dtg_ListaDoctores);
             this.Controls.Add(this.btn_registrar);
-            this.Controls.Add(this.btn_aceptar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txt_numtel);
             this.Controls.Add(this.label3);
@@ -165,7 +165,7 @@
             this.Controls.Add(this.txt_nombre);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txt_cedula);
-            this.Name = "AltaDoctor";
+            this.Name = "AltaDoctores";
             this.Text = "AltaDoctor";
             this.Shown += new System.EventHandler(this.ListaDoctores_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dtg_ListaDoctores)).EndInit();
@@ -185,9 +185,9 @@
         private System.Windows.Forms.TextBox txt_apellidos;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txt_numtel;
-        private System.Windows.Forms.Button btn_aceptar;
         private System.Windows.Forms.Button btn_registrar;
         private System.Windows.Forms.DataGridView dtg_ListaDoctores;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btn_consultar;
     }
 }
