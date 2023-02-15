@@ -411,7 +411,7 @@ namespace Api_Consultorio.Controllers
                     jwt.Issuer,
                     jwt.Audience,
                     claims,
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(15),
                     signingCredentials: signIn
                     );
                 return Ok(new JwtSecurityTokenHandler().WriteToken(token));
@@ -438,9 +438,37 @@ namespace Api_Consultorio.Controllers
             }
             
             
-            //ps a ver que royal
         }
-        //wA desayunar
+
+        //[HttpGet("{NombreUsuario}")]
+        //public ActionResult Consultarusuario([FromRoute] string NombreUsuario)
+        //{
+        //    var result = _clienteServices.ConsultarClientePorId(id);
+        //    try
+        //    {
+        //        if (result == null)
+        //        {
+        //            return NotFound("Cliente no encontrado");
+        //        }
+
+
+
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message);
+
+        //        return StatusCode(500,
+        //            new
+        //            {
+        //                Error = "410025",
+        //                Mensaje = "Error: Cliente no fue procesado",
+        //                Data = result
+        //            });
+        //    }
+
+        //}
 
         #endregion
     }

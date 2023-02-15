@@ -41,6 +41,12 @@
             this.dtg_ListaDoctores = new System.Windows.Forms.DataGridView();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_consultar = new System.Windows.Forms.Button();
+            this.btn_put = new System.Windows.Forms.Button();
+            this.btn_consultar_id = new System.Windows.Forms.Button();
+            this.btn_delete = new System.Windows.Forms.Button();
+            this.txt_put = new System.Windows.Forms.TextBox();
+            this.txt_consultar = new System.Windows.Forms.TextBox();
+            this.txt_delete = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_ListaDoctores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -140,7 +146,7 @@
             // 
             // btn_consultar
             // 
-            this.btn_consultar.Location = new System.Drawing.Point(90, 345);
+            this.btn_consultar.Location = new System.Drawing.Point(12, 368);
             this.btn_consultar.Name = "btn_consultar";
             this.btn_consultar.Size = new System.Drawing.Size(75, 23);
             this.btn_consultar.TabIndex = 12;
@@ -148,11 +154,68 @@
             this.btn_consultar.UseVisualStyleBackColor = true;
             this.btn_consultar.Click += new System.EventHandler(this.btn_consultar_Click);
             // 
+            // btn_put
+            // 
+            this.btn_put.Location = new System.Drawing.Point(186, 283);
+            this.btn_put.Name = "btn_put";
+            this.btn_put.Size = new System.Drawing.Size(75, 23);
+            this.btn_put.TabIndex = 13;
+            this.btn_put.Text = "Actualizar";
+            this.btn_put.UseVisualStyleBackColor = true;
+            this.btn_put.Click += new System.EventHandler(this.btn_put_Click);
+            // 
+            // btn_consultar_id
+            // 
+            this.btn_consultar_id.Location = new System.Drawing.Point(186, 368);
+            this.btn_consultar_id.Name = "btn_consultar_id";
+            this.btn_consultar_id.Size = new System.Drawing.Size(101, 23);
+            this.btn_consultar_id.TabIndex = 14;
+            this.btn_consultar_id.Text = "Consultar por id";
+            this.btn_consultar_id.UseVisualStyleBackColor = true;
+            this.btn_consultar_id.Click += new System.EventHandler(this.btn_consultar_id_Click);
+            // 
+            // btn_delete
+            // 
+            this.btn_delete.Location = new System.Drawing.Point(371, 368);
+            this.btn_delete.Name = "btn_delete";
+            this.btn_delete.Size = new System.Drawing.Size(75, 23);
+            this.btn_delete.TabIndex = 15;
+            this.btn_delete.Text = "Eliminar";
+            this.btn_delete.UseVisualStyleBackColor = true;
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
+            // 
+            // txt_put
+            // 
+            this.txt_put.Location = new System.Drawing.Point(289, 284);
+            this.txt_put.Name = "txt_put";
+            this.txt_put.Size = new System.Drawing.Size(139, 23);
+            this.txt_put.TabIndex = 16;
+            // 
+            // txt_consultar
+            // 
+            this.txt_consultar.Location = new System.Drawing.Point(187, 415);
+            this.txt_consultar.Name = "txt_consultar";
+            this.txt_consultar.Size = new System.Drawing.Size(142, 23);
+            this.txt_consultar.TabIndex = 17;
+            // 
+            // txt_delete
+            // 
+            this.txt_delete.Location = new System.Drawing.Point(371, 415);
+            this.txt_delete.Name = "txt_delete";
+            this.txt_delete.Size = new System.Drawing.Size(135, 23);
+            this.txt_delete.TabIndex = 18;
+            // 
             // AltaDoctores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txt_delete);
+            this.Controls.Add(this.txt_consultar);
+            this.Controls.Add(this.txt_put);
+            this.Controls.Add(this.btn_delete);
+            this.Controls.Add(this.btn_consultar_id);
+            this.Controls.Add(this.btn_put);
             this.Controls.Add(this.btn_consultar);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dtg_ListaDoctores);
@@ -189,5 +252,11 @@
         private System.Windows.Forms.DataGridView dtg_ListaDoctores;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btn_consultar;
+        private System.Windows.Forms.Button btn_put;
+        private System.Windows.Forms.Button btn_consultar_id;
+        private System.Windows.Forms.Button btn_delete;
+        private System.Windows.Forms.TextBox txt_put;
+        private System.Windows.Forms.TextBox txt_consultar;
+        private System.Windows.Forms.TextBox txt_delete;
     }
 }

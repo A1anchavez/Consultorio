@@ -32,7 +32,7 @@ namespace Consultorio
 
         private void btn_altaConsulta_Click(object sender, EventArgs e)
         {
-            var frmAltaConsulta = new AltaConsultas();
+            var frmAltaConsulta = new InicioSesion();
             frmAltaConsulta.ShowDialog();
         }
 

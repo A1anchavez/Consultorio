@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Consultorio.Dtos
 {
-    public class DoctorDto
+    public class ClienteDto
     {
         public string Id { get; set; }
-        public string Cedula { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public string NumeroDeTelefono { get; set; }
+        public DateTime FechaDeNacimiento { get; set; }
+        public string Direccion { get; set; }
+        public string NombreUsuario { get; set; }
+        public string Contraseña { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Api_Consultorio.Controllers
 {
     [ApiController]
     [Route("doctor")]
+
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorServices _doctorServices;

@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AltaCliente));
             this.dtg_ListaClientes = new System.Windows.Forms.DataGridView();
             this.btn_registrar = new System.Windows.Forms.Button();
-            this.btn_aceptar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txt_direccion = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,6 +40,13 @@
             this.txt_nombre = new System.Windows.Forms.TextBox();
             this.dtp_fechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txt_delete = new System.Windows.Forms.TextBox();
+            this.txt_consultar = new System.Windows.Forms.TextBox();
+            this.txt_put = new System.Windows.Forms.TextBox();
+            this.btn_delete = new System.Windows.Forms.Button();
+            this.btn_consultar_id = new System.Windows.Forms.Button();
+            this.btn_put = new System.Windows.Forms.Button();
+            this.btn_consultar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_ListaClientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -56,23 +62,13 @@
             // 
             // btn_registrar
             // 
-            this.btn_registrar.Location = new System.Drawing.Point(129, 319);
+            this.btn_registrar.Location = new System.Drawing.Point(12, 289);
             this.btn_registrar.Name = "btn_registrar";
             this.btn_registrar.Size = new System.Drawing.Size(75, 23);
             this.btn_registrar.TabIndex = 20;
             this.btn_registrar.Text = "Registrar";
             this.btn_registrar.UseVisualStyleBackColor = true;
             this.btn_registrar.Click += new System.EventHandler(this.btn_registrar_Click);
-            // 
-            // btn_aceptar
-            // 
-            this.btn_aceptar.Location = new System.Drawing.Point(12, 319);
-            this.btn_aceptar.Name = "btn_aceptar";
-            this.btn_aceptar.Size = new System.Drawing.Size(75, 23);
-            this.btn_aceptar.TabIndex = 19;
-            this.btn_aceptar.Text = "Aceptar";
-            this.btn_aceptar.UseVisualStyleBackColor = true;
-            this.btn_aceptar.Click += new System.EventHandler(this.btn_aceptar_Click);
             // 
             // label4
             // 
@@ -148,16 +144,83 @@
             this.pictureBox1.TabIndex = 23;
             this.pictureBox1.TabStop = false;
             // 
+            // txt_delete
+            // 
+            this.txt_delete.Location = new System.Drawing.Point(410, 415);
+            this.txt_delete.Name = "txt_delete";
+            this.txt_delete.Size = new System.Drawing.Size(135, 23);
+            this.txt_delete.TabIndex = 29;
+            // 
+            // txt_consultar
+            // 
+            this.txt_consultar.Location = new System.Drawing.Point(226, 415);
+            this.txt_consultar.Name = "txt_consultar";
+            this.txt_consultar.Size = new System.Drawing.Size(142, 23);
+            this.txt_consultar.TabIndex = 28;
+            // 
+            // txt_put
+            // 
+            this.txt_put.Location = new System.Drawing.Point(328, 284);
+            this.txt_put.Name = "txt_put";
+            this.txt_put.Size = new System.Drawing.Size(139, 23);
+            this.txt_put.TabIndex = 27;
+            // 
+            // btn_delete
+            // 
+            this.btn_delete.Location = new System.Drawing.Point(410, 368);
+            this.btn_delete.Name = "btn_delete";
+            this.btn_delete.Size = new System.Drawing.Size(75, 23);
+            this.btn_delete.TabIndex = 26;
+            this.btn_delete.Text = "Eliminar";
+            this.btn_delete.UseVisualStyleBackColor = true;
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
+            // 
+            // btn_consultar_id
+            // 
+            this.btn_consultar_id.Location = new System.Drawing.Point(225, 368);
+            this.btn_consultar_id.Name = "btn_consultar_id";
+            this.btn_consultar_id.Size = new System.Drawing.Size(101, 23);
+            this.btn_consultar_id.TabIndex = 25;
+            this.btn_consultar_id.Text = "Consultar por id";
+            this.btn_consultar_id.UseVisualStyleBackColor = true;
+            this.btn_consultar_id.Click += new System.EventHandler(this.btn_consultar_id_Click);
+            // 
+            // btn_put
+            // 
+            this.btn_put.Location = new System.Drawing.Point(225, 283);
+            this.btn_put.Name = "btn_put";
+            this.btn_put.Size = new System.Drawing.Size(75, 23);
+            this.btn_put.TabIndex = 24;
+            this.btn_put.Text = "Actualizar";
+            this.btn_put.UseVisualStyleBackColor = true;
+            this.btn_put.Click += new System.EventHandler(this.btn_put_Click);
+            // 
+            // btn_consultar
+            // 
+            this.btn_consultar.Location = new System.Drawing.Point(12, 385);
+            this.btn_consultar.Name = "btn_consultar";
+            this.btn_consultar.Size = new System.Drawing.Size(75, 23);
+            this.btn_consultar.TabIndex = 30;
+            this.btn_consultar.Text = "Consultar";
+            this.btn_consultar.UseVisualStyleBackColor = true;
+            this.btn_consultar.Click += new System.EventHandler(this.btn_consultar_Click);
+            // 
             // AltaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_consultar);
+            this.Controls.Add(this.txt_delete);
+            this.Controls.Add(this.txt_consultar);
+            this.Controls.Add(this.txt_put);
+            this.Controls.Add(this.btn_delete);
+            this.Controls.Add(this.btn_consultar_id);
+            this.Controls.Add(this.btn_put);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dtp_fechaNacimiento);
             this.Controls.Add(this.dtg_ListaClientes);
             this.Controls.Add(this.btn_registrar);
-            this.Controls.Add(this.btn_aceptar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txt_direccion);
             this.Controls.Add(this.label3);
@@ -179,7 +242,6 @@
 
         private System.Windows.Forms.DataGridView dtg_ListaClientes;
         private System.Windows.Forms.Button btn_registrar;
-        private System.Windows.Forms.Button btn_aceptar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txt_direccion;
         private System.Windows.Forms.Label label3;
@@ -189,5 +251,12 @@
         private System.Windows.Forms.TextBox txt_nombre;
         private System.Windows.Forms.DateTimePicker dtp_fechaNacimiento;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox txt_delete;
+        private System.Windows.Forms.TextBox txt_consultar;
+        private System.Windows.Forms.TextBox txt_put;
+        private System.Windows.Forms.Button btn_delete;
+        private System.Windows.Forms.Button btn_consultar_id;
+        private System.Windows.Forms.Button btn_put;
+        private System.Windows.Forms.Button btn_consultar;
     }
 }
