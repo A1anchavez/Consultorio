@@ -29,6 +29,15 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 
+
+////////////
+var secction = builder.Configuration
+ .GetSection("Correo:Destinatarios").Get<List<Operador>>();
+////////////
+
+
+
+
 ////////////////
 builder.Services.AddMemoryCache();
 var connection = builder.Configuration.GetConnectionString("SQLConnectionString");
@@ -94,8 +103,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-////////////////////////////////////////////////////////
 
+//HealthCheck
 builder.Services.AddHealthChecks()
     .AddCheck("App Running", () => HealthCheckResult.Healthy("la api funciona")
     )
@@ -111,8 +120,6 @@ builder.Services.AddHealthChecks()
     );
 
 
-////////////////////////////////////////////////////////
-
 
 var app = builder.Build();
 
@@ -123,7 +130,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseSerilogRequestLogging();//////////////////////////////////////////
+app.UseSerilogRequestLogging();//Serilog
 
 app.UseHttpsRedirection();
 
@@ -131,7 +138,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-////////////////////////////////
+//HealthCheck
 app.MapHealthChecks("/health-details", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
