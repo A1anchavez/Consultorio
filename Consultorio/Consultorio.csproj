@@ -20,10 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infraestructura.InMemroy\Infraestructura.InMemroy.csproj" />
-    <ProjectReference Include="..\Infraestructura.Sqlite\Infraestructura.Sqlite.csproj" />
     <ProjectReference Include="..\Infraestructura.SQLServer\Infraestructura.SQLServer.csproj" />
-    <ProjectReference Include="..\Infraestructura.TextFile\Infraestructura.TextFile.csproj" />
   </ItemGroup>
 
   <ItemGroup>
