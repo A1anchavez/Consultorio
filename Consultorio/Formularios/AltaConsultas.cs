@@ -1,8 +1,6 @@
 ﻿using Consultorio.Business.Entidades;
 using Consultorio.Business.Interfaces.Common;
 using Consultorio.Dtos;
-using Infraestructura.Sqlite.Contextos;
-using Infraestructura.Sqlite.Repositorios;
 using Infraestructura.SQLServer.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -37,10 +35,10 @@ namespace Consultorio.Formularios
         {
             Consulta consulta = new Consulta()
             {
-                Cliente = txt_NomClnt.Text,
-                Doctor = txt_NomDoc.Text,
-                FechaConsulta = dtp_fechaConsulta.Value,
-                Motivo = txt_MotCon.Text
+                //Cliente = txt_NomClnt.Text,
+                //Doctor = txt_NomDoc.Text,
+                //FechaConsulta = dtp_fechaConsulta.Value,
+                //Motivo = txt_MotCon.Text
 
             };
             await Post(consulta);

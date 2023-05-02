@@ -73,21 +73,21 @@ namespace Api_Consultorio.Controllers
 
         //Consultar un Doctor
         [HttpGet]
-        public ActionResult ConsultarDoctor([FromQuery] DoctorParameters doctorParameters)
+        public ActionResult ConsultarDoctor()
         {
-            var result = _doctorServices.ConsultarDoctores(doctorParameters);
+            var result = _doctorServices.ConsultarDoctores();
 
-            var metadata = new
-            {
-                result.TotalCount,
-                result.PageSize,
-                result.CurrentPage,
-                result.HasNext,
-                result.HasPrevious
-            };
+            //var metadata = new
+            //{
+            //    result.TotalCount,
+            //    result.PageSize,
+            //    result.CurrentPage,
+            //    result.HasNext,
+            //    result.HasPrevious
+            //};
 
-            Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(metadata));
-            _logger.LogInformation($"Se mostraron {result.TotalCount}  doctores de la base de datos");
+            //Response.Headers.Add("X-Pagination",JsonConvert.SerializeObject(metadata));
+            //_logger.LogInformation($"Se mostraron {result.TotalCount}  doctores de la base de datos");
             return Ok(result);
         }
 

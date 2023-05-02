@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
+
 
 namespace Api_Consultorio.Contexto
 {
@@ -11,7 +13,7 @@ namespace Api_Consultorio.Contexto
         public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("SqlConnection");
+            _connectionString = _configuration.GetConnectionString("SQLConnectionString");
         }
 
         public IDbConnection CreateConnection() => new SqlConnection(_connectionString);

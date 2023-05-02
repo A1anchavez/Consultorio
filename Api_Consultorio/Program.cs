@@ -1,4 +1,5 @@
 using Api_Consultorio.Contexto;
+using Api_Consultorio.Dapper.Servicios;
 using Api_Consultorio.Extensiones;
 using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Interfaces.Servicios;
@@ -44,7 +45,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddMemoryCache();
 var connection = builder.Configuration.GetConnectionString("SQLConnectionString");
 builder.Services.AddSingleton<DapperContext>();
-//builder.Services.ConfigureSQLDbContext(connection);
+builder.Services.ConfigureSQLDbContext(connection);
 
 builder.Services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
@@ -62,7 +63,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioSQLRepository>();
 
 
 builder.Services.AddScoped<IClienteServices, ClienteServices>();
-builder.Services.AddScoped<IDoctorServices, DoctorServices>();
+builder.Services.AddScoped<IDoctorServices, DoctorDapperService>();
 
 
 builder.Services.AddControllers();

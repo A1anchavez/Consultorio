@@ -54,21 +54,26 @@ namespace Consultorio.Business.Servicios
             return doctor;
         }
 
-        public PagedList<Doctor> ConsultarDoctores(DoctorParameters doctorParameters)
+        public IEnumerable<Doctor> ConsultarDoctores()
         {
-            var doctor = _repo.Consultar(doctorParameters);
-
-            var metadata = new
-            {
-                doctor.TotalCount,
-                doctor.PageSize,
-                doctor.CurrentPage,
-                doctor.HasNext,
-                doctor.HasPrevious
-            };
-
-            return doctor;
+            throw new NotImplementedException();
         }
+
+        //public PagedList<Doctor> ConsultarDoctores(DoctorParameters doctorParameters)
+        //{
+        //    var doctor = _repo.Consultar(doctorParameters);
+
+        //    var metadata = new
+        //    {
+        //        doctor.TotalCount,
+        //        doctor.PageSize,
+        //        doctor.CurrentPage,
+        //        doctor.HasNext,
+        //        doctor.HasPrevious
+        //    };
+
+        //    return doctor;
+        //}
         public Doctor ConsultarDoctorPorId(string id)
         {
             var doctor = _repo.Consultar().Where(x => x.Id == id).FirstOrDefault();

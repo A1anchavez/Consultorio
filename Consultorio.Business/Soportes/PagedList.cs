@@ -23,6 +23,11 @@ namespace Consultorio.Business.Soportes
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             AddRange(items);
         }
+
+        public PagedList()
+        {
+        }
+
         public static PagedList<T> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
         {
             var count = source.Count();
