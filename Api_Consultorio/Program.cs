@@ -1,3 +1,4 @@
+using Api_Consultorio.Contexto;
 using Api_Consultorio.Extensiones;
 using Consultorio.Business.Interfaces.Repositorios;
 using Consultorio.Business.Interfaces.Servicios;
@@ -7,6 +8,7 @@ using Infraestructura.SQLServer.Repositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -31,8 +33,8 @@ Log.Logger = new LoggerConfiguration()
 
 
 ////////////
-var secction = builder.Configuration
- .GetSection("Correo:Destinatarios").Get<List<Operador>>();
+/*var secction = builder.Configuration
+ .GetSection("Correo:Destinatarios").Get<List<Operador>>();*/
 ////////////
 
 
@@ -41,7 +43,8 @@ var secction = builder.Configuration
 ////////////////
 builder.Services.AddMemoryCache();
 var connection = builder.Configuration.GetConnectionString("SQLConnectionString");
-builder.Services.ConfigureSQLDbContext(connection);
+builder.Services.AddSingleton<DapperContext>();
+//builder.Services.ConfigureSQLDbContext(connection);
 
 builder.Services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
@@ -49,11 +52,14 @@ builder.Services.AddControllersWithViews()
             );
 
 
-//Inyectar Dependencia
+//Inyectar Dependencia SQL
 builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;
 builder.Services.AddScoped<IUsuarioRepository, UsuarioSQLRepository>();
+
+//Inyectar Dependencia Dapper
+
 
 builder.Services.AddScoped<IClienteServices, ClienteServices>();
 builder.Services.AddScoped<IDoctorServices, DoctorServices>();
