@@ -45,7 +45,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddMemoryCache();
 var connection = builder.Configuration.GetConnectionString("SQLConnectionString");
 builder.Services.AddSingleton<DapperContext>();
-builder.Services.ConfigureSQLDbContext(connection);
+//builder.Services.ConfigureSQLDbContext(connection);
 
 builder.Services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
@@ -54,15 +54,15 @@ builder.Services.AddControllersWithViews()
 
 
 //Inyectar Dependencia SQL
-builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
-builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
-builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;
-builder.Services.AddScoped<IUsuarioRepository, UsuarioSQLRepository>();
+//builder.Services.AddScoped<IConsultaRepository, ConsultaSQLRepository>();
+//builder.Services.AddScoped<IClienteRepository, ClienteSQLRepository>();
+//builder.Services.AddScoped<IDoctorRepository, DoctorSQLRepository>() ;
+//builder.Services.AddScoped<IUsuarioRepository, UsuarioSQLRepository>();
 
 //Inyectar Dependencia Dapper
 
 
-builder.Services.AddScoped<IClienteServices, ClienteServices>();
+builder.Services.AddScoped<IClienteServices, ClienteDapperService>();
 builder.Services.AddScoped<IDoctorServices, DoctorDapperService>();
 
 

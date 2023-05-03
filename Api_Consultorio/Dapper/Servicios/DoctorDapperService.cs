@@ -96,7 +96,7 @@ namespace Api_Consultorio.Dapper.Servicios
 
         public Doctor ConsultarDoctorPorId(string id)
         {
-            var query = "SELECT Id,cedulaDoctor,nombreDoctor,apellidoDoctor,numeroTelefonoDoctor FROM cat.Doctores WHERE Id=@Id";
+            var query = "SELECT Id,CedulaDoctor,NombreDoctor,ApellidoDoctor,NumeroTelefonoDoctor FROM cat.Doctores WHERE Id=@Id";
             using (var connection = _context.CreateConnection())
             {
                 var doctor = connection.QuerySingleOrDefault<Doctor>(query, new { id });
