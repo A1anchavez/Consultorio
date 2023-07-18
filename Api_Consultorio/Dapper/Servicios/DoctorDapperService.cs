@@ -85,18 +85,20 @@ namespace Api_Consultorio.Dapper.Servicios
 
         public IEnumerable<Doctor> ConsultarDoctores()
         {
-            var query = "SELECT * FROM cat.Doctores";
+            var query = "SELECT id as Id,CedulaDoctor as Cedula, NombreDoctor as Nombre, apellidoDoctor as Apellido, " +
+                "NumeroTelefonoDoctor as NumeroDeTelefono FROM cat.Doctores";
             using (var connection = _context.CreateConnection())
             {
-                var companies = connection.Query<Doctor>(query);
+                var doctor = connection.Query<Doctor>(query);
 
-                return companies.ToList();
+                return doctor.ToList();
             }
         }
 
         public Doctor ConsultarDoctorPorId(string id)
         {
-            var query = "SELECT Id,CedulaDoctor,NombreDoctor,ApellidoDoctor,NumeroTelefonoDoctor FROM cat.Doctores WHERE Id=@Id";
+            var query = "SELECT id as Id,CedulaDoctor as Cedula, NombreDoctor as Nombre, apellidoDoctor as Apellido,"+
+                "NumeroTelefonoDoctor as NumeroDeTelefono FROM cat.Doctores WHERE Id=@Id";
             using (var connection = _context.CreateConnection())
             {
                 var doctor = connection.QuerySingleOrDefault<Doctor>(query, new { id });

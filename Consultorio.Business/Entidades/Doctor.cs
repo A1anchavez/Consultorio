@@ -14,34 +14,27 @@ namespace Consultorio.Business.Entidades
     {
         private string _cedula;
         private string _numeroDeTelefono;
-        //public string Cedula { 
-        //    get => _cedula; 
-        //    set => _cedula = value.IsNumber(nameof(Cedula)).EqualsNumber(16,nameof(Cedula)).HasWhiteSpace(nameof(Cedula)).HasDash(nameof(Cedula)); 
-        //}
         public string Cedula
         {
-            get;
-            set;
+            get => _cedula;
+            set => _cedula = value.IsNumber(nameof(Cedula)).EqualsNumber(16, nameof(Cedula)).HasWhiteSpace(nameof(Cedula)).HasDash(nameof(Cedula));
         }
         public string NumeroDeTelefono { 
             get => _numeroDeTelefono; 
             set => _numeroDeTelefono = value.IsNumber(nameof(NumeroDeTelefono)).EqualsNumber(10,nameof(NumeroDeTelefono)).HasWhiteSpace(nameof(NumeroDeTelefono)); 
         }
-        //Propiedad de navegacion
-
         public List<Consulta>? Consultas { get; set; }
 
         public Doctor()
         {
             Id ??= Guid.NewGuid().ToString();
         }
-                                                                                //numerodetelefono cambio de string a int
         public Doctor(string cedula, string nombre, string apellidos, string numeroDeTelefono)
         {
-            //Cedula = cedula;
-            //Nombre = nombre;
-            //Apellido = apellidos;
-            //NumeroDeTelefono = numeroDeTelefono;
+            Cedula = cedula;
+            Nombre = nombre;
+            Apellido = apellidos;
+            NumeroDeTelefono = numeroDeTelefono;
 
         }
 
